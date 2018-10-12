@@ -1,6 +1,8 @@
 var tapTime = 500;
 var tapMoveLimit = 5;
+var doubleTapTime = 1000;
 var tap = false;
+var tapped = false;
 var doubleTap = false;
 var swipe = false;
 var hold = false;
@@ -55,7 +57,7 @@ gameplayState.prototype.update = function() {
 
 	//stop moving if at destination
 	//console.log(destPoint === nullPoint);
-	if (samePoint(destPoint, nullPoint) || samePoint(this.player.body.position, destPoint, 5)) {
+	if (samePoint(destPoint, nullPoint) || samePoint(this.player.body.position, destPoint, 5) || !tap) {
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 	} else {
@@ -73,12 +75,13 @@ gameplayState.prototype.update = function() {
 	}
 	//touch input
 	if (touch.justReleased()) {
-		tap = doubleTap = swipe = hold = drag = false;
+		swipe = hold = drag = false;
 		//get final location of tap
 		endPoint = pointer.positionDown;
 		var movDist = getDist(startPoint, endPoint);
 
 		//check for tap or swipe
+		//console.log(touch.timeUp - touch.timeDown);
 		if (touch.timeUp - touch.timeDown <= tapTime) {
 			if (destPoint !== nullPoint)
 				destPoint = this.player.body.position;
@@ -86,22 +89,26 @@ gameplayState.prototype.update = function() {
 			if (movDist >= 0 && movDist < tapMoveLimit) {
 				//check for double tap: properly finds double tap but then overwrites double tap as single tap
 				console.log(touch.timeDown - previousTap);
-				if (previousTap > 0 && (touch.timeDown - previousTap > 0 && touch.timeDown - previousTap <= tapTime)) {
+				if ((previousTap > 0 && (touch.timeDown - previousTap > 0 && touch.timeDown - previousTap <= doubleTapTime)) || doubleTap) {
 					//double tap
 					doubleTap = true;
+					tap = false;
 					console.log("double tap");
 				} else {	//single tap
+					doubleTap = false;
 					tap = true;
 					console.log("tap");
 					destPoint = startPoint;
-					previousTap = touch.timeUp;
 				}
+				previousTap = touch.timeUp;
 			} else {	//swipe
+				tap = doubleTap = false;
 				swipe = true;
 				console.log("swipe");
 				//get swipe vector
 			}
 		} else {
+			tap = doubleTap = false;
 			if (movDist >= 0 && movDist < tapMoveLimit) {
 				//tap and hold
 				hold = true;
@@ -112,8 +119,9 @@ gameplayState.prototype.update = function() {
 				console.log("drag");
 			}
 		}
+	} else {
+		doubleTap = false;
 	}
-
 	/*if (this.cursors.left.isDown && !this.cursors.right.isDown) {
 		this.player.body.velocity.x = -150;
 		this.player.animations.play("left");
