@@ -120,6 +120,7 @@ Player.prototype.movement = function() {
 	if (this.cursors.up.isDown && this.player.body.touching.down) {
 		this.player.body.velocity.y = -350;
 	}*/
+	
 };
 
 function getDist(point1, point2) {
