@@ -1,6 +1,6 @@
 var tapTime = 500;
 var tapMoveLimit = 5;
-var doubleTapTime = 1000;
+var doubleTapTime = 500;
 var tap = false;
 var tapped = false;
 var doubleTap = false;
@@ -15,7 +15,9 @@ var playerSpeed = 150;
 var pointer;
 var touch;
 var previousTap = -1;
-var init = false;
+var dodgeStart = -1;
+var dodgeMult = 1;
+var dodge = 400;
 
 let Player = function (x, y, skin) {
 	Phaser.Sprite.call(this, game, x, y, skin);
@@ -30,7 +32,6 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player; 
 
 Player.prototype.update = function() {
-	//console.log("update");
 	this.movement();
 };
 
@@ -40,8 +41,7 @@ Player.prototype.movement = function() {
 	touch = pointer.leftButton;
 
 	//stop moving if at destination
-	//console.log(destPoint === nullPoint);
-	if (samePoint(destPoint, nullPoint) || samePoint(this.body.position, destPoint, 5) || !tap) {
+	if (samePoint(destPoint, nullPoint) || samePoint(this.body.position, destPoint, 5) || !(tap || doubleTap)) {
 		this.body.velocity.x = 0;
 		this.body.velocity.y = 0;
 	} else {
@@ -49,8 +49,8 @@ Player.prototype.movement = function() {
 		let velox = (destPoint.x - this.body.x) / getDist(this.body.position, destPoint);
 		let veloy = (destPoint.y - this.body.y) / getDist(this.body.position, destPoint);
 		let velot = game.math.distance(0, 0, velox*velox, veloy*veloy);
-		this.body.velocity.x = velox * (playerSpeed/velot);
-		this.body.velocity.y = veloy * (playerSpeed/velot);
+		this.body.velocity.x = velox * dodgeMult * (playerSpeed/velot);
+		this.body.velocity.y = veloy * dodgeMult * (playerSpeed/velot);
 	}
 
 	if (touch.justPressed()) {
@@ -65,30 +65,39 @@ Player.prototype.movement = function() {
 		var movDist = getDist(startPoint, endPoint);
 
 		//check for tap or swipe
-		//console.log(touch.timeUp - touch.timeDown);
 		if (touch.timeUp - touch.timeDown <= tapTime) {
 			if (destPoint !== nullPoint)
 				destPoint = this.body.position;
 			//check for tap
 			if (movDist >= 0 && movDist < tapMoveLimit) {
 				//check for double tap: properly finds double tap but then overwrites double tap as single tap
-				//console.log(touch.timeDown - previousTap);
 				if ((previousTap > 0 && (touch.timeDown - previousTap > 0 && touch.timeDown - previousTap <= doubleTapTime)) || doubleTap) {
 					//double tap
 					doubleTap = true;
 					tap = false;
-					//console.log("double tap");
+					console.log("double tap");
+					if (startPoint.y > this.body.y)
+						destPoint = new Phaser.Point(this.body.x, this.body.y + dodge);
+					else if (startPoint.y < this.body.y - 100)
+						destPoint = this.body.position;
+					else if (startPoint.x > this.body.x)
+						destPoint = new Phaser.Point(this.body.x + dodge, this.body.y);
+					else if (startPoint.x < this.body.x)
+						destPoint = new Phaser.Point(this.body.x - dodge, this.body.y);						
+					dodgeMult = 2;
+					//console.log("(" + destPoint.x + ", " + destPoint.y + ")");
 				} else {	//single tap
 					doubleTap = false;
 					tap = true;
-					//console.log("tap");
+					console.log("tap");
 					destPoint = startPoint;
+					dodgeMult = 1;
 				}
 				previousTap = touch.timeUp;
 			} else {	//swipe
 				tap = doubleTap = false;
 				swipe = true;
-				//console.log("swipe");
+				console.log("swipe");
 				//get swipe vector
 			}
 		} else {
@@ -96,11 +105,11 @@ Player.prototype.movement = function() {
 			if (movDist >= 0 && movDist < tapMoveLimit) {
 				//tap and hold
 				hold = true;
-				//console.log("hold");
+				console.log("hold");
 			} else {
 				//tap and drag
 				drag = true;
-				//console.log("drag");
+				console.log("drag");
 			}
 		}
 	} else {

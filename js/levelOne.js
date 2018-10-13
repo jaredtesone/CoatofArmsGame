@@ -1,11 +1,11 @@
 var working = 0;
 
 // gameState constructor
-let gameplayState = function() {
+let levelOneState = function() {
 	this.score = 0;
 };
 
-gameplayState.prototype.create = function() {
+levelOneState.prototype.create = function() {
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 
 	game.add.sprite(0, 0, "sky");
@@ -29,7 +29,7 @@ gameplayState.prototype.create = function() {
 	//this.cursors = game.input.keyboard.createCursorKeys();
 };
 
-gameplayState.prototype.update = function() {
+levelOneState.prototype.update = function() {
 	working++;
 	
 /*if (this.cursors.left.isDown && !this.cursors.right.isDown) {
