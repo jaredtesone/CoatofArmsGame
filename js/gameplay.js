@@ -17,6 +17,12 @@ var touch;
 var previousTap = -1;
 
 
+var hostile = false;
+var attack = false;
+var following = false;
+var hp = 50;
+var attackTime = 5;
+var betweenAttack = 7;
 
 // gameState constructor
 let gameplayState = function() {
@@ -50,6 +56,13 @@ gameplayState.prototype.create = function() {
 	this.player.animations.add("right", [5, 6, 7, 8], 10, true);
 
 	//this.cursors = game.input.keyboard.createCursorKeys();
+
+	this.enemy = game.add.sprite(10, 10, "star");
+	game.physics.arcade.enable(this.enemy);
+	//game.physics.enable(enemy, Phaser.Physics.ARCADE);
+
+	this.enemy.body.collideWorldBounds = true;
+	this.enemy.body.velocity.x = 80;
 };
 
 gameplayState.prototype.update = function() {
@@ -136,6 +149,25 @@ gameplayState.prototype.update = function() {
 	if (this.cursors.up.isDown && this.player.body.touching.down) {
 		this.player.body.velocity.y = -350;
 	}*/
+	if (getDist(this.player.body.position, this.enemy.body.position) < 200){
+		following = true;
+	}
+	if (following === true){
+		if (this.player.body.velocity.x === 0 && this.player.body.velocity.y === 0 && getDist(this.player.body.position, this.enemy.body.position) < 50){
+			this.enemy.body.velocity.x = 0;
+			this.enemy.body.velocity.y = 0;
+			attack = true;
+		}
+		else {
+			let enemyVelocityX = (this.player.body.position.x - this.enemy.body.x) / getDist(this.enemy.body.position, this.player.body.position);
+			let enemyVelocityY = (this.player.body.position.y - this.enemy.body.y) / getDist(this.enemy.body.position, this.player.body.position);
+			let enemyVelocityMult = game.math.distance(0, 0, enemyVelocityX*enemyVelocityX, enemyVelocityY*enemyVelocityY);
+			this.enemy.body.velocity.x = enemyVelocityX * (100/enemyVelocityMult);
+			this.enemy.body.velocity.y = enemyVelocityY * (100/enemyVelocityMult);
+		}
+
+	}
+	
 };
 
 function getDist(point1, point2) {
