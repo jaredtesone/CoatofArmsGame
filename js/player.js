@@ -11,13 +11,15 @@ var startPoint = new Phaser.Point(-1, -1);
 var endPoint = new Phaser.Point(-1, -1);
 var destPoint = new Phaser.Point(-1, -1);
 var nullPoint = new Phaser.Point(-1, -1);
+var startPos = new Phaser.Point(-1, -1);
 var playerSpeed = 150;
 var pointer;
 var touch;
 var previousTap = -1;
 var dodgeStart = -1;
 var dodgeMult = 1;
-var dodge = 400;
+var dodge = 200;
+var dodgeCt = 0;
 
 let Player = function (x, y, skin) {
 	Phaser.Sprite.call(this, game, x, y, skin);
@@ -66,28 +68,45 @@ Player.prototype.movement = function() {
 
 		//check for tap or swipe
 		if (touch.timeUp - touch.timeDown <= tapTime) {
-			if (destPoint !== nullPoint)
-				destPoint = this.body.position;
+			/*if (destPoint !== nullPoint && (!doubleTap || !tap))
+				destPoint = this.body.position;*/
 			//check for tap
 			if (movDist >= 0 && movDist < tapMoveLimit) {
-				//check for double tap: properly finds double tap but then overwrites double tap as single tap
+				//check for double tap
 				if ((previousTap > 0 && (touch.timeDown - previousTap > 0 && touch.timeDown - previousTap <= doubleTapTime)) || doubleTap) {
 					//double tap
+					if (dodgeCt < 1) {
+						startPos = this.body.position;
+						console.log("dodgeCt is 0");
+						if (startPoint.y > startPos.y + 200)
+							destPoint = new Phaser.Point(startPos.x, startPos.y + dodge);
+						else if (startPoint.y < startPos.y - 200)
+							destPoint = startPos;
+						else if (startPoint.x > startPos.x)
+							destPoint = new Phaser.Point(startPos.x + dodge, startPos.y);
+						else if (startPoint.x < startPos.x)
+							destPoint = new Phaser.Point(startPos.x - dodge, startPos.y);
+					}
+					console.log(dodgeCt);
+					console.log("(" + startPos.x + ", " + startPos.y + ")");
+					console.log("(" + this.body.x + ", " + this.body.y + ")");
+					dodgeCt++;
 					doubleTap = true;
-					tap = false;
+					tap = true;
 					console.log("double tap");
-					if (startPoint.y > this.body.y)
-						destPoint = new Phaser.Point(this.body.x, this.body.y + dodge);
-					else if (startPoint.y < this.body.y - 100)
-						destPoint = this.body.position;
-					else if (startPoint.x > this.body.x)
-						destPoint = new Phaser.Point(this.body.x + dodge, this.body.y);
-					else if (startPoint.x < this.body.x)
-						destPoint = new Phaser.Point(this.body.x - dodge, this.body.y);						
+					/*if (startPoint.y > startPos.y)
+						destPoint = new Phaser.Point(startPos.x, startPos.y + dodge);
+					else if (startPoint.y < startPos.y - 100)
+						destPoint = startPos;
+					else if (startPoint.x > startPos.x)
+						destPoint = new Phaser.Point(startPos.x + dodge, startPos.y);
+					else if (startPoint.x < startPos.x)
+						destPoint = new Phaser.Point(startPos.x - dodge, startPos.y);*/						
 					dodgeMult = 2;
-					//console.log("(" + destPoint.x + ", " + destPoint.y + ")");
+					console.log("(" + destPoint.x + ", " + destPoint.y + ")");
 				} else {	//single tap
 					doubleTap = false;
+					dodgeCt = 0;
 					tap = true;
 					console.log("tap");
 					destPoint = startPoint;
@@ -95,6 +114,7 @@ Player.prototype.movement = function() {
 				}
 				previousTap = touch.timeUp;
 			} else {	//swipe
+				dodgeCt = 0;
 				tap = doubleTap = false;
 				swipe = true;
 				console.log("swipe");
@@ -102,6 +122,7 @@ Player.prototype.movement = function() {
 			}
 		} else {
 			tap = doubleTap = false;
+			dodgeCt = 0;
 			if (movDist >= 0 && movDist < tapMoveLimit) {
 				//tap and hold
 				hold = true;
@@ -114,6 +135,7 @@ Player.prototype.movement = function() {
 		}
 	} else {
 		doubleTap = false;
+		dodgeCt = 0;
 	}
 	/*if (this.cursors.left.isDown && !this.cursors.right.isDown) {
 		this.player.body.velocity.x = -150;

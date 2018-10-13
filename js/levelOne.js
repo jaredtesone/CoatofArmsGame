@@ -38,7 +38,7 @@ levelOneState.prototype.create = function() {
 };
 
 levelOneState.prototype.update = function() {
-	working++;
+	//working++;
 	
 	if (checkDist(this.enemy.body.position, this.player.body.position) < 300){
 		this.enemy.follow = true;
