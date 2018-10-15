@@ -56,7 +56,7 @@ Enemy.prototype.update = function() {
 			//console.log(attackTime);
 			//initiate lunge
 			if (attackTime > 0 && attackTime <= 40 && !this.retreating) {
-				console.log("lunge");
+				//console.log("lunge");
 				this.lunging = true;
 				//this.lungeCt++;
 				this.body.velocity.x = this.lastVeloX;
@@ -86,7 +86,7 @@ Enemy.prototype.update = function() {
 Enemy.prototype.retreat = function() {
 	if (!this.alive)
 		return;
-	console.log("retreat");
+	//console.log("retreat");
 	this.retreating = true;
 	this.body.velocity.x = 0 - this.lastVeloX;
 	this.body.velocity.y = 0 - this.lastVeloY;

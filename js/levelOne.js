@@ -16,22 +16,19 @@ let levelOneState = function() {
 	this.score = 0;
 };
 
-levelOneState.prototype.preload = function() {
-	game.load.tilemap('TileMap1', 'assets/start.json', null, Phaser.Tilemap.TILED_JSON);
-	game.load.image('TileSheetv2', 'assets/TileSheetv2.png')
-};
-
 levelOneState.prototype.create = function() {
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
-	map = this.game.add.tilemap('TileMap1');
-	map.addTilesetImage('TileSheetv2', 'TileSheetv2');
-	layerMain = map.createLayer('main');
-	layerBack = map.createLayer('back');
-	layerMain.resizeWorld();
-	layerBack.resizeWorld();
-	layerBack.wrap = true;
-	layerMain.wrap = true;
+	this.map = this.game.add.tilemap("TileMap1", 125, 125, 125, 75);
+	this.map.addTilesetImage("TileSheetv2", "TileSheetv2");
+	this.layerMain = this.map.createLayer("main");
+	this.layerBack = this.map.createLayer("back");
+	//layerMain.resizeWorld();
+	this.layerBack.resizeWorld();
+	this.layerBack.wrap = true;
+	this.map.setCollision([7, 8, 9, 10, 12], true, this.layerMain);
+	game.physics.arcade.enable(this.layerMain);
+	//layerMain.wrap = true;
 
 	//game.add.sprite(0, 0, "sky");
 	this.enemies = game.add.group();
@@ -44,8 +41,9 @@ levelOneState.prototype.create = function() {
 	ground.body.immovable = true;
 	//game.physics.arcade.enable(this.ground);*/
 
-	this.player = new Player(1218, 562, "player", true);
-
+	this.player = new Player(6437.5, 9312.5, "player", true);
+	game.physics.arcade.enable(this.player);
+	game.camera.follow(this.player);
 	this.enemy1 = new Enemy(10, 10, "player", "generic");
 	this.enemies.add(this.enemy1);
 	this.enemy2 = new Enemy(300, 58, "player", "dragon");
@@ -65,6 +63,8 @@ levelOneState.prototype.create = function() {
 
 levelOneState.prototype.update = function() {
 	game.physics.arcade.collide(this.enemies);
+	game.physics.arcade.collide(this.enemies, this.layerMain);
+	game.physics.arcade.collide(this.player, this.layerMain);
 
 	//enemies will chase down player within certain detection radius
 	this.enemies.forEachAlive(followPlayer, this, this.player);
@@ -138,7 +138,7 @@ levelOneState.prototype.damagePlayer = function(enemy) {
 	//deal damage to player if attacking and player is not shielding
 	if (enemy.attack && !(this.player.hasShield && this.player.pointer.isDown))
 		this.player.hp -= enemy.damage;
-	console.log(this.player.hp);
+	//console.log(this.player.hp);
 	//kill player if health is depleted
 	if (this.player.hp <= 0) {
 		this.player.alive = false;
@@ -154,7 +154,7 @@ levelOneState.prototype.attackEnemy = function(enemy, damage) {
 	//console.log("attack");
 	if (enemy.targeted)
 		enemy.hp -= damage;
-	console.log(enemy.hp);
+	//console.log(enemy.hp);
 	//kill enemy if health is depleted
 	if (enemy.hp <= 0) {
 		enemy.alive = false;

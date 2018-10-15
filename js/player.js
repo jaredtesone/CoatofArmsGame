@@ -24,7 +24,7 @@ var resetCt = 0;
 
 let Player = function (x, y, skin, shield) {
 	Phaser.Sprite.call(this, game, x, y, skin);
-	game.physics.arcade.enable(this);
+	//game.physics.arcade.enable(this);
 	game.add.existing(this);
 
 	game.input.maxPointers = 1;
