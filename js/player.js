@@ -4,6 +4,7 @@ var doubleTapTime = 500;
 var tap = false;
 //var tapped = false;
 var doubleTap = false;
+var chargeTime = 2000;
 /*var swipe = false;
 var hold = false;
 var drag = false;*/
@@ -21,7 +22,7 @@ var dodge = 200;
 var dodgeCt = 0;
 var resetCt = 0;
 
-let Player = function (x, y, skin) {
+let Player = function (x, y, skin, shield) {
 	Phaser.Sprite.call(this, game, x, y, skin);
 	game.physics.arcade.enable(this);
 	game.add.existing(this);
@@ -38,8 +39,11 @@ let Player = function (x, y, skin) {
 	this.drag = false;
 	this.pointerCross = false;
 	this.swipeCt = 0;
+	this.dragCt = 0;
 	this.hp = 100;
 	this.alive = true;
+	this.shieldCharge = 0;
+	this.hasShield = shield;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -111,7 +115,7 @@ Player.prototype.movement = function() {
 					//console.log("(" + startPos.x + ", " + startPos.y + ")");
 					//console.log("(" + this.body.x + ", " + this.body.y + ")");
 					dodgeCt++;
-					this.swipeCt = 0;
+					this.swipeCt = this.dragCt = 0;
 					doubleTap = tap = true;
 					this.swipe = false;
 					console.log("double tap");
@@ -127,7 +131,7 @@ Player.prototype.movement = function() {
 					console.log("(" + destPoint.x + ", " + destPoint.y + ")");
 				} else {	//single tap
 					doubleTap = this.swipe = false;
-					dodgeCt = this.swipeCt = 0;
+					dodgeCt = this.swipeCt = this.dragCt = 0;
 					tap = true;
 					console.log("tap");
 					destPoint = this.startPoint;
@@ -135,11 +139,11 @@ Player.prototype.movement = function() {
 				}
 				previousTap = touch.timeUp;
 			} else {	//swipe
-				dodgeCt = 0;
+				dodgeCt = this.dragCt = 0;
 				tap = doubleTap = false;
 				//if (swipeCt === 0) {
-					this.swipe = true;
-					console.log("swipe");
+				this.swipe = true;
+				console.log("swipe");
 				//}
 				//swipeCt++;
 				//get swipe vector
@@ -147,7 +151,7 @@ Player.prototype.movement = function() {
 			}
 		} else {
 			this.swipe = tap = doubleTap = false;
-			dodgeCt = this.swipeCt = 0;
+			dodgeCt = this.swipeCt = this.dragCt = 0;
 			if (movDist >= 0 && movDist < tapMoveLimit) {
 				//tap and hold
 				this.hold = true;
@@ -157,12 +161,14 @@ Player.prototype.movement = function() {
 				//tap and drag
 				this.drag = true;
 				this.hold = false;
+				if (this.hasShield)
+					this.shieldCharge = ((touch.timeUp - touch.timeDown) / 2000);
 				console.log("drag");
 			}
 		}
 	} else {
 		this.swipe = doubleTap = false;
-		dodgeCt = this.swipeCt = 0;
+		dodgeCt = this.swipeCt = this.dragCt = 0;
 	}
 	/*if (this.cursors.left.isDown && !this.cursors.right.isDown) {
 		this.player.body.velocity.x = -150;

@@ -1,9 +1,12 @@
 var detectRadius = 300;
 var weaponRadius = 100;
 var attackRadius = 100;
+var damageRadius = 5;
 var slashDamage = 10;
 var thrustDamage = 30;
 var strikeDamage = 20;
+var smashThreshold = 1;
+var shieldDamage = 50;
 
 // gameState constructor
 let levelOneState = function() {
@@ -24,7 +27,7 @@ levelOneState.prototype.create = function() {
 	ground.body.immovable = true;
 	//game.physics.arcade.enable(this.ground);*/
 
-	this.player = new Player(1218, 562, "player");
+	this.player = new Player(1218, 562, "player", true);
 
 	this.enemy1 = new Enemy(10, 10, "player", "generic");
 	this.enemies.add(this.enemy1);
@@ -54,6 +57,7 @@ levelOneState.prototype.update = function() {
 	//if not swiping over any enemies, clear targets
 	if (!this.player.pointerCross)
 		this.enemies.forEachAlive(this.target, this, false);
+	//console.log(this.player.pointerCross);
 	
 	//player attack
 	if (this.player.swipe && this.player.alive) {
@@ -76,15 +80,23 @@ levelOneState.prototype.update = function() {
 		}
 		//attack all enemies targeted by swipe
 		if (this.player.pointerCross && this.player.swipeCt === 0) {
-			console.log("attackEnemy");
+			//console.log("attackEnemy");
 			this.enemies.forEachAlive(this.attackEnemy, this, damage);
 			this.player.swipeCt++;
 		}
 	}
 
+	if (this.player.drag && this.player.shieldCharge >= smashThreshold && this.player.alive) {
+		if (this.player.pointerCross && this.player.dragCt === 0) {
+			console.log("shield smash");
+			this.enemies.forEachAlive(this.attackEnemy, this, shieldDamage);
+			this.player.hasShield = false;
+			this.player.dragCt++;
+		}
+	}
+
 	//enemies within attack radius damage player
 	this.enemies.forEachAlive(this.damagePlayer, this);
-	
 	
 	
 /*if (this.cursors.left.isDown && !this.cursors.right.isDown) {
@@ -106,8 +118,8 @@ levelOneState.prototype.update = function() {
 levelOneState.prototype.damagePlayer = function(enemy) {
 	if (!this.player.alive)
 		return;
-	//deal damage to player if attacking
-	if (enemy.attack)
+	//deal damage to player if attacking and player is not shielding
+	if (enemy.attack && !(this.player.hasShield && this.player.pointer.isDown))
 		this.player.hp -= enemy.damage;
 	console.log(this.player.hp);
 	//kill player if health is depleted
@@ -170,6 +182,11 @@ function followPlayer(enemy, player){
 			enemy.lastVeloY = enemy.body.velocity.y;
 		}
 	}
+	//console.log(enemy.retreating);
+	if (dist >= 0 && dist < attackRadius)
+		enemy.attacking = true;
+	else
+		enemy.attacking = false;
 };
 
 //get distance between points, returning -1 if points uninitialized

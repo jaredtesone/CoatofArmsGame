@@ -11,8 +11,10 @@ let Enemy = function (x, y, skin, kind) {
 	game.physics.arcade.enable(this);
 	game.add.existing(this);
 	this.hp = 50;
-	this.damage = 0.5;
+	this.damage = 5;
 	this.attack = false;
+	this.attacking = false;
+	this.retreating = false;
 	this.hostile = false;
 	this.body.velocity.x = 50;
 	this.follow = false;
@@ -32,21 +34,32 @@ Enemy.prototype.constructor = Enemy;
 Enemy.prototype.update = function() {
 	if (!this.alive)
 		return;
-	if (this.hostile === true){
+	//this.retreating = false;
+	if (this.hostile === true) {
 		betweenAttack--;
-		if (betweenAttack <= 0){
-			this.attack = true;
-			attackTime -= 1;
+		if (betweenAttack <= 0) {
+			//console.log(betweenAttack);
+			if (betweenAttack === 0)
+				attackTime = 8;
+			if (attackTime === 8 && this.attacking)
+				this.attack = true;
+			else 
+				this.attack = false;
+			//console.log(this.attack);
+			attackTime--;
 			this.body.velocity.x = this.lastVeloX;
 			this.body.velocity.y = this.lastVeloY; 
 			if (attackTime === 0){
-				this.attack = false;
-				betweenAttack = 12;
+				//this.attack = false;
+				betweenAttack = 80;
 				if (this.lastX > 0 && this.lastY > 0){
 					this.retreat();
-				}
-				attackTime = 8;
-			}
+				} /*else
+					this.retreating = false;*/
+				//attackTime = 8;
+			} /*else
+				this.retreating = false;*/
+			//console.log(this.retreating);
 		}
 	}
 };
@@ -60,6 +73,8 @@ Enemy.prototype.retreat = function() {
 		this.body.velocity.x = 0;
 		this.body.velocity.y = 0;
 	}
-	attackTime = 5;
-	return 0;
+	//this.retreating = true;
+	//console.log(this.retreating);
+	//attackTime = 5;
+	//return 0;
 };
