@@ -38,6 +38,8 @@ let Player = function (x, y, skin) {
 	this.drag = false;
 	this.pointerCross = false;
 	this.swipeCt = 0;
+	this.hp = 100;
+	this.alive = true;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -49,6 +51,8 @@ Player.prototype.update = function() {
 };
 
 Player.prototype.movement = function() {
+	if (!this.alive)
+		return;
 	//stop moving if at destination
 	if (samePoint(destPoint, nullPoint) || samePoint(this.body.position, destPoint, 5) || !(tap || doubleTap)) {
 		this.body.velocity.x = 0;

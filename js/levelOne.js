@@ -44,28 +44,20 @@ levelOneState.prototype.create = function() {
 };
 
 levelOneState.prototype.update = function() {
-	//working++;
-	this.enemies.forEachAlive(followPlayer, this, this.player);
 	game.physics.arcade.collide(this.enemies);
-	/*if (checkDist(enemy.body.position, player.body.position) < detectRadius){
-			this.enemy.follow = true;
-		}
-		if (this.enemy.follow === true){
-			followPlayer(this.enemy, this.player);
-			//followPlayer(this.enemy2, this.player);
-		}
-	}*/
 
-	//if swiping over enemy, establish enemy as targeted
+	//enemies will chase down player within certain detection radius
+	this.enemies.forEachAlive(followPlayer, this, this.player);
+
+	//if swiping over enemy, mark enemy as targeted
 	this.enemies.forEachAlive(this.target, this, true);
 	//if not swiping over any enemies, clear targets
 	if (!this.player.pointerCross)
 		this.enemies.forEachAlive(this.target, this, false);
-	//console.log(this.player.pointerCross);
-	//console.log(this.player.swipe);
-	//console.log(swipeCt);
-	if (this.player.swipe) {
-		//player attack
+	
+	//player attack
+	if (this.player.swipe && this.player.alive) {
+		//determine attack move based on swipe direction
 		let pi = game.math.PI2 / 2;
 		let angle = game.math.normalizeAngle(this.player.swipeAngle);
 		let damage = 0;
@@ -82,14 +74,16 @@ levelOneState.prototype.update = function() {
 			console.log("strike");
 			damage = strikeDamage;
 		}
-		//console.log(this.player.pointerCross);
+		//attack all enemies targeted by swipe
 		if (this.player.pointerCross && this.player.swipeCt === 0) {
-			console.log("attack");
-			this.enemies.forEachAlive(this.attack, this, damage);
+			console.log("attackEnemy");
+			this.enemies.forEachAlive(this.attackEnemy, this, damage);
 			this.player.swipeCt++;
 		}
-		//this.player.swipe = false;	//only deal damage once per swipe
 	}
+
+	//enemies within attack radius damage player
+	this.enemies.forEachAlive(this.damagePlayer, this);
 	
 	
 	
@@ -109,20 +103,40 @@ levelOneState.prototype.update = function() {
 	}*/
 };
 
-levelOneState.prototype.attack = function(enemy, damage) {
+levelOneState.prototype.damagePlayer = function(enemy) {
+	if (!this.player.alive)
+		return;
+	//deal damage to player if attacking
+	if (enemy.attack)
+		this.player.hp -= enemy.damage;
+	console.log(this.player.hp);
+	//kill player if health is depleted
+	if (this.player.hp <= 0) {
+		this.player.alive = false;
+		this.player.kill();
+		//game over?
+	}
+}
+
+levelOneState.prototype.attackEnemy = function(enemy, damage) {
+	if (!this.player.alive)
+		return;	
 	//deal damage to enemy if targeted
 	//console.log("attack");
 	if (enemy.targeted)
 		enemy.hp -= damage;
 	console.log(enemy.hp);
-	if (enemy.hp <= 0)
+	//kill enemy if health is depleted
+	if (enemy.hp <= 0) {
+		enemy.alive = false;
 		enemy.kill();
+	}
 };
 
 levelOneState.prototype.target = function(enemy, attacking) {
+	if (!this.player.alive)
+		return;	
 	//must be swiping within 5 pixels of enemy, and player can be no farther than 5 pixels away from enemy in order to target enemy
-	//console.log("swipe over: " + (samePoint(enemy.body.position, this.player.pointer.position, weaponRadius) && this.player.pointer.isDown));
-	//console.log("close: " + samePoint(enemy.body.position, this.player.body.position, attackRadius));
 	if (samePoint(enemy.body.position, this.player.pointer.position, weaponRadius) && samePoint(enemy.body.position, this.player.body.position, attackRadius)) {
 		this.player.pointerCross = attacking;
 		enemy.targeted = attacking;
@@ -131,7 +145,10 @@ levelOneState.prototype.target = function(enemy, attacking) {
 };
 
 function followPlayer(enemy, player){
-	if (checkDist(enemy.body.position, player.body.position) < detectRadius){
+	if (!this.player.alive)
+		return;	
+	let dist = getDist(enemy.body.position, player.body.position);
+	if (dist >= 0 && dist < detectRadius) {
 		if (player.body.velocity.x === 0 && player.body.velocity.y === 0 && getDist(player.body.position, enemy.body.position) < 50 ){
 			if (enemy.body.velocity.x !== 0 && enemy.body.velocity.y !== 0){
 				enemy.lastVeloX = enemy.body.velocity.x;
@@ -154,16 +171,15 @@ function followPlayer(enemy, player){
 		}
 	}
 };
+
+//get distance between points, returning -1 if points uninitialized
 function getDist(point1, point2) {
 	if (samePoint(point1, nullPoint) || samePoint(point2, nullPoint))
 		return -1;
 	return game.math.distance(point1.x, point1.y, point2.x, point2.y);
 };
 
-function checkDist(point1, point2){
-	return getDist(point1, point2);
-};
-
+//determine if two points are within epsilon pixels of each other
 function samePoint(point1, point2, epsilon) {
 	return (game.math.fuzzyEqual(point1.x, point2.x, epsilon) && game.math.fuzzyEqual(point1.y, point2.y, epsilon));
 };
