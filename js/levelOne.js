@@ -161,15 +161,22 @@ function followPlayer(enemy, player){
 		return;	
 	let dist = getDist(enemy.body.position, player.body.position);
 	if (dist >= 0 && dist < detectRadius) {
-		if (player.body.velocity.x === 0 && player.body.velocity.y === 0 && getDist(player.body.position, enemy.body.position) < 50 ){
-			if (enemy.body.velocity.x !== 0 && enemy.body.velocity.y !== 0){
-				enemy.lastVeloX = enemy.body.velocity.x;
-				enemy.lastVeloY = enemy.body.velocity.y;
-				enemy.lastX = enemy.body.position.x;
-				enemy.lastY = enemy.body.position.y;
+		if (player.body.velocity.x === 0 && player.body.velocity.y === 0 && getDist(player.body.position, enemy.body.position) < 100){
+			if (enemy.body.velocity.x !== 0 && enemy.body.velocity.y !== 0) {
+				if (!enemy.retreating) {
+					enemy.lastVeloX = enemy.body.velocity.x;
+					enemy.lastVeloY = enemy.body.velocity.y;
+				}
+				/*enemy.lastX = enemy.body.x;
+				enemy.lastY = enemy.body.y;*/
+			} else if (enemy.body.velocity.x === 0 && enemy.body.velocity.y === 0 && !enemy.lunging) {
+				console.log("change last");
+				enemy.lastX = enemy.body.x;
+				enemy.lastY = enemy.body.y;
 			}
 			enemy.body.velocity.x = 0;
 			enemy.body.velocity.y = 0;
+			enemy.hostile = true;
 		}
 		else {
 			let enemyVelocityX = (player.body.x - enemy.body.x) / getDist(enemy.body.position, player.body.position);
@@ -177,9 +184,12 @@ function followPlayer(enemy, player){
 			let enemyVelocityMult = game.math.distance(0, 0, enemyVelocityX*enemyVelocityX, enemyVelocityY*enemyVelocityY);
 			enemy.body.velocity.x = enemyVelocityX * (100/enemyVelocityMult);
 			enemy.body.velocity.y = enemyVelocityY * (100/enemyVelocityMult);
-			enemy.hostile = true;
-			enemy.lastVeloX = enemy.body.velocity.x;
-			enemy.lastVeloY = enemy.body.velocity.y;
+			enemy.lunging = false;
+			enemy.hostile = false;
+
+			//enemy.hostile = true;
+		/*	enemy.lastVeloX = enemy.body.velocity.x;
+			enemy.lastVeloY = enemy.body.velocity.y;*/
 		}
 	}
 	//console.log(enemy.retreating);

@@ -1,8 +1,9 @@
 // JavaScript source code
 var hostile = false;
 var attack = false;
-var attackTime = 8;
-var betweenAttack = 12;
+var attackTime = 40;
+var lungeWait = 5;
+var retreatWait = 50; 
 //var hp = 50;
 //var type;
 
@@ -11,10 +12,11 @@ let Enemy = function (x, y, skin, kind) {
 	game.physics.arcade.enable(this);
 	game.add.existing(this);
 	this.hp = 50;
-	this.damage = 5;
+	this.damage = 10;
 	this.attack = false;
 	this.attacking = false;
 	this.retreating = false;
+	this.lunging = false;
 	this.hostile = false;
 	this.body.velocity.x = 50;
 	this.follow = false;
@@ -24,7 +26,8 @@ let Enemy = function (x, y, skin, kind) {
 	this.lastVeloX = 0;
 	this.lastVeloY = 0;
 	this.targeted = false;
-	this.alive = true;
+	this.alive = true; 
+	this.lungeCt = 0;
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -36,25 +39,41 @@ Enemy.prototype.update = function() {
 		return;
 	//this.retreating = false;
 	if (this.hostile === true) {
-		betweenAttack--;
-		if (betweenAttack <= 0) {
+		
+		retreatWait--;
+		//console.log(retreatWait);
+		if (retreatWait <= 0) {
 			//console.log(betweenAttack);
-			if (betweenAttack === 0)
-				attackTime = 8;
+			if (retreatWait === 0)
+				attackTime = 40;
+			///	console.log("Reset");
 			if (attackTime === 8 && this.attacking)
 				this.attack = true;
 			else 
 				this.attack = false;
 			//console.log(this.attack);
-			attackTime--;
-			this.body.velocity.x = this.lastVeloX;
-			this.body.velocity.y = this.lastVeloY; 
-			if (attackTime === 0){
+			
+			//console.log(attackTime);
+			//initiate lunge
+			if (attackTime > 0 && attackTime <= 40 && !this.retreating) {
+				console.log("lunge");
+				this.lunging = true;
+				//this.lungeCt++;
+				this.body.velocity.x = this.lastVeloX;
+				this.body.velocity.y = this.lastVeloY; 
+				attackTime--;
+			}
+			//this.body.velocity.x = this.lastVeloX;
+			//this.body.velocity.y = this.lastVeloY; 
+			if (attackTime === 0) {
 				//this.attack = false;
-				betweenAttack = 80;
-				if (this.lastX > 0 && this.lastY > 0){
+				lungeWait--;
+				if (lungeWait <= 0) {
 					this.retreat();
-				} /*else
+				}
+				//if (this.lastX > 0 && this.lastY > 0) {
+				//this.retreat();
+				/*else
 					this.retreating = false;*/
 				//attackTime = 8;
 			} /*else
@@ -67,14 +86,27 @@ Enemy.prototype.update = function() {
 Enemy.prototype.retreat = function() {
 	if (!this.alive)
 		return;
+	console.log("retreat");
+	this.retreating = true;
 	this.body.velocity.x = 0 - this.lastVeloX;
 	this.body.velocity.y = 0 - this.lastVeloY;
-	if (this.body.position.x === this.lastX && this.body.position === this.lastY){
-		this.body.velocity.x = 0;
-		this.body.velocity.y = 0;
+	this.retreating = true; 
+	//console.log(this.body.velocity.x);
+	let lastPos = new Phaser.Point(this.lastX, this.lastY);
+	if (samePoint(this.body.position, lastPos, 0.1)) {
+		//this.body.velocity.x = 0;
+		//this.body.velocity.y = 0;
+		//console.log(this.body.velocity.x);
+		this.retreating = false;
+		retreatWait = 50;
+		lungeWait = 5;
 	}
 	//this.retreating = true;
 	//console.log(this.retreating);
 	//attackTime = 5;
 	//return 0;
+};
+
+function samePoint(point1, point2, epsilon) {
+	return (game.math.fuzzyEqual(point1.x, point2.x, epsilon) && game.math.fuzzyEqual(point1.y, point2.y, epsilon));
 };
