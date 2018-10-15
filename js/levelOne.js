@@ -7,16 +7,33 @@ var thrustDamage = 30;
 var strikeDamage = 20;
 var smashThreshold = 1;
 var shieldDamage = 50;
+var map;
+var layerMain;
+var layerBack;
 
 // gameState constructor
 let levelOneState = function() {
 	this.score = 0;
 };
 
+levelOneState.prototype.preload = function() {
+	game.load.tilemap('TileMap1', 'assets/start.json', null, Phaser.Tilemap.TILED_JSON);
+	game.load.image('TileSheetv2', 'assets/TileSheetv2.png')
+};
+
 levelOneState.prototype.create = function() {
 	game.physics.startSystem(Phaser.Physics.ARCADE);
+	
+	map = this.game.add.tilemap('TileMap1');
+	map.addTilesetImage('TileSheetv2', 'TileSheetv2');
+	layerMain = map.createLayer('main');
+	layerBack = map.createLayer('back');
+	layerMain.resizeWorld();
+	layerBack.resizeWorld();
+	layerBack.wrap = true;
+	layerMain.wrap = true;
 
-	game.add.sprite(0, 0, "sky");
+	//game.add.sprite(0, 0, "sky");
 	this.enemies = game.add.group();
 	this.enemies.enableBody = true;
 	/*this.platforms = game.add.group();
