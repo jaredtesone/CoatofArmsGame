@@ -3,7 +3,7 @@ var hostile = false;
 var attack = false;
 var attackTime = 8;
 var betweenAttack = 12;
-var hp = 50;
+//var hp = 50;
 var type;
 
 let Enemy = function (x, y, skin, kind) {
@@ -20,6 +20,7 @@ let Enemy = function (x, y, skin, kind) {
 	this.lastY = 0;
 	this.lastVeloX = 0;
 	this.lastVeloY = 0;
+	this.targeted = false;
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
