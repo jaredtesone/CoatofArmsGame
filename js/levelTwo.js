@@ -73,7 +73,7 @@ levelTwoState.prototype.create = function() {
 	this.button = game.add.button(0, 875, "buttonBackground", this.loadText, this);
 	this.button.fixedToCamera = true;
 
-	text = game.add.text(0, 875, "Intro text", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	text = game.add.text(0, 875, "Don Quixote heads to the edge of the village, and begins venturing into the deadly, cursed woods. After about an hour, he wanders into a clearing and-", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	text.setTextBounds(0, 0, 2436, 250);
 	text.fixedToCamera = true;
 
@@ -257,13 +257,13 @@ levelTwoState.prototype.loadText = function() {
 	text.fixedToCamera = true;
 	text.setTextBounds(0, 875, 2436, 250);
 	if (stageCounter === 1) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Black Knight: HALT! All who pass must pay a toll in blood or coin. What will it be, peasant?", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 2) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: I’m no peasant you brigand! I am a hero, and you will be the one paying a toll in blood!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 3) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "5 other bandits step out from the behind the trees they were hiding in.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 10});
 		this.bandit1 = new Enemy(1250, 1500, "character", "bandit", false);
 		this.enemies.add(this.bandit1);
 		this.bandit2 = new Enemy(2375, 1500, "character", "bandit", false);
@@ -274,10 +274,10 @@ levelTwoState.prototype.loadText = function() {
 		this.enemies.add(this.bandit4);
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 4) {
-		text = game.add.text(0, 875, "kill him bois", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Black Knight: Kill him.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 5) {
-		text = game.add.text(0, 875, "don quiz poop", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: Fools, the forces of good will always triumph over evil!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 6) {
 		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
@@ -296,14 +296,14 @@ levelTwoState.prototype.loadText = function() {
 		this.button.revive();
 		//return;
 	}*/ else if (stageCounter === 7) {
-		text = game.add.text(0, 875, "victory!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "After the bandits are defeated, Juan takes off the black knights armor and puts it on. The instant he places the helmet on his head, the entire set of armor turns white.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 10});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.button.revive();
 	} else if (stageCounter === 8) {
-		text = game.add.text(0, 875, "hero's armor", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "You have received A Hero’s Armor!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 9) {
-		text = game.add.text(0, 875, "good sign boi", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: That is surely a good sign!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.player.armor = true;
 	} else if (stageCounter === 10) {
