@@ -74,6 +74,7 @@ levelTwoState.prototype.create = function() {
 	this.enemies.add(this.bandit4);*/
 /*	this.bandit5 = new Enemy(1875, 1500, "bandit", "bandit", false);
 	this.enemies.add(this.bandit5);*/
+	stageCounter = 0;
 
 	this.button = game.add.button(0, 875, "buttonBackground", this.loadText, this);
 	this.button.fixedToCamera = true;
@@ -200,7 +201,7 @@ levelTwoState.prototype.attackEnemy = function(enemy, damage) {
 		return;	
 	//deal damage to enemy if targeted
 	if (enemy.targeted)
-		enemy.hp -= damage/damageReduc;
+		enemy.hp -= damage;
 	console.log("Enemy health: " + enemy.hp);
 	//kill enemy if health is depleted
 	if (enemy.hp <= 0) {
@@ -262,6 +263,7 @@ levelTwoState.prototype.loadText = function() {
 	text.fixedToCamera = true;
 	text.setTextBounds(0, 875, 2436, 250);
 	if (stageCounter === 1) {
+		console.log("stage 1");
 		text = game.add.text(0, 875, "Black Knight: HALT! All who pass must pay a toll in blood or coin. What will it be, peasant?", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 2) {
@@ -313,6 +315,8 @@ levelTwoState.prototype.loadText = function() {
 		this.player.armor = true;
 	} else if (stageCounter === 10) {
 		//next level
+		text.kill();
+		this.button.kill();
 		game.state.start("LevelThree");
 	}
 	text.setTextBounds(0, 0, 2436, 250);
