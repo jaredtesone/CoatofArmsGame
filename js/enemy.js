@@ -34,7 +34,7 @@ let Enemy = function (x, y, skin, kind, evil) {
 		this.damage = 25;
 	} else if (this.kind = "bandit") {
 		this.hp = 50;
-		this.damage = 25;
+		this.damage = 10;
 	}
 	else if (this.kind = "king") {
 		this.hp = 400;

@@ -72,6 +72,8 @@ levelFourState.prototype.create = function() {
 /*	this.bandit5 = new Enemy(1875, 1500, "bandit", "bandit", false);
 	this.enemies.add(this.bandit5);*/
 
+	stageCounter = 0;
+
 	this.button = game.add.button(0, 875, "buttonBackground", this.loadText, this);
 	this.button.fixedToCamera = true;
 
@@ -197,7 +199,7 @@ levelFourState.prototype.attackEnemy = function(enemy, damage) {
 		return;	
 	//deal damage to enemy if targeted
 	if (enemy.targeted)
-		enemy.hp -= damage/damageReduc;
+		enemy.hp -= damage;
 	console.log("Enemy health: " + enemy.hp);
 	//kill enemy if health is depleted
 	if (enemy.hp <= 0) {

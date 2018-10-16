@@ -41,7 +41,7 @@ let Dragon = function (x, y, skin, evil) {
 
 Dragon.prototype = Object.create(Phaser.Sprite.prototype);
 
-Dragon.prototype.constructor = Enemy;
+Dragon.prototype.constructor = Dragon;
 
 Dragon.prototype.update = function() {
 	if (!this.alive || !this.evil)
