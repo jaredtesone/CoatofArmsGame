@@ -313,6 +313,7 @@ levelTwoState.prototype.loadText = function() {
 		this.player.armor = true;
 	} else if (stageCounter === 10) {
 		//next level
+		game.state.start("LevelThree");
 	}
 	text.setTextBounds(0, 0, 2436, 250);
 	text.fixedToCamera = true;

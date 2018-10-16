@@ -352,7 +352,7 @@ levelThreeState.prototype.loadText = function() {
 	} else if (stageCounter === 19) {
 		if (this.joinDragon) {
 			//next level
-			//game.state.start("levelFour");
+			game.state.start("LevelFour");
 			console.log("join the dragon");
 			text.kill();
 			this.button.kill();
@@ -368,7 +368,7 @@ levelThreeState.prototype.loadText = function() {
 		this.button.revive();
 	} else if (stageCounter === 22) {
 		//next level
-		//game.state.start("levelFive");
+		game.state.start("LevelFive");
 	}
 	text.setTextBounds(0, 0, 2436, 250);
 	textA.setTextBounds(0, 0, 1218, 250);
