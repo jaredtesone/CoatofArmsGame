@@ -19,8 +19,21 @@ var pressCt = 0;
 var relCt = 0;
 var posUp;
 var posDown;
+var sword;
+var swordReady = true;
 
 let Player = function (x, y, skin, shield, armor) {
+	
+	timer = game.time.create(false);
+	
+	//  Set a TimerEvent to occur after 2 seconds
+	timer.loop(1000, readySword, this);
+	timer.start();
+		
+	sword = game.add.audio('sword');
+	sword2 = game.add.audio('sword2');
+	sword3 = game.add.audio('sword3');
+	
 	Phaser.Sprite.call(this, game, x, y, skin);
 	game.add.existing(this);
 
@@ -181,6 +194,18 @@ Player.prototype.movement = function() {
 				dodgeCt = this.dragCt = 0;
 				this.tap = this.doubleTap = false;
 				this.swipe = true;
+				
+				if (swordReady) {
+					var n = game.rnd.integerInRange(1, 3)
+					if (n == 1)
+						sword.play();
+					else if (n == 2)
+						sword2.play();
+					else if (n == 3)
+						sword3.play();
+				}
+				
+				swordReady = false;
 				console.log("swipe");
 				//get swipe vector
 				this.swipeAngle = game.math.angleBetweenPoints(this.startPoint, this.endPoint);
@@ -243,4 +268,8 @@ function worldToScreen(point) {
 function screenToWorld(point) {
 	let newPt = new Phaser.Point(point.x + game.camera.x, point.y + game.camera.y);
   	return newPt;
+};
+
+function readySword() {
+		swordReady = true;
 };
