@@ -56,8 +56,8 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player; 
 
 Player.prototype.update = function() {
-	if (this.armor)
-		this.hp = 200;
+	/*if (this.armor)
+		this.hp = 200;*/
 	this.movement();
 };
 

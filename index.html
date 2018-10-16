@@ -7,8 +7,10 @@
 	<script type="text/javascript" src="js/preload.js"></script>
 	<script type="text/javascript" src="js/levelOne.js"></script>
 	<script type="text/javascript" src="js/levelTwo.js"></script>
+	<script type="text/javascript" src="js/levelThree.js"></script>
 	<script type="text/javascript" src="js/player.js"></script>
 	<script type="text/javascript" src="js/enemy.js"></script>
+	<script type="text/javascript" src="js/dragon.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -25,6 +27,7 @@
 	game.state.add("Preload", preloadState);
 	game.state.add("LevelOne", levelOneState);
 	game.state.add("LevelTwo", levelTwoState);
+	game.state.add("LevelThree", levelThreeState);
 	game.state.start("Preload");
 
 
