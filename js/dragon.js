@@ -10,7 +10,7 @@ let Dragon = function (x, y, skin, evil) {
 	game.physics.arcade.enable(this);
 	game.add.existing(this);
 	this.hp = 1500;
-	this.damage = 10;
+	this.damage = 25;
 	this.attack = false;
 	this.attacking = false;
 	this.retreating = false;
@@ -29,6 +29,9 @@ let Dragon = function (x, y, skin, evil) {
 	this.lungeCt = 0;
 	this.evil = evil;
 
+	this.animations.add("idle", [0], 1, false);
+	this.animations.add("hostile", [0, 1], 2, true);
+
 	/*if (this.kind === "dark knight") {
 		this.hp = 1000;
 		this.damage = 25;
@@ -44,6 +47,10 @@ Dragon.prototype = Object.create(Phaser.Sprite.prototype);
 Dragon.prototype.constructor = Dragon;
 
 Dragon.prototype.update = function() {
+	if (!this.evil)
+		this.animations.play("idle");
+	else
+		this.animations.play("hostile");
 	if (!this.alive || !this.evil)
 		return;
 	if (this.hostile === true) {

@@ -1,7 +1,7 @@
-var detectRadius = 300;
+var detectRadius = 500;
 var weaponRadius = 100;
-var attackRadius = 100;
-var damageRadius = 5;
+var attackRadius = 200;
+var damageRadius = 200;
 var slashDamage = 10;
 var thrustDamage = 30;
 var strikeDamage = 20;
@@ -283,8 +283,8 @@ levelFourState.prototype.loadText = function() {
 	/*} else if (stageCounter === 7) {
 		text = game.add.text(0, 875, "Peter: Fool, even without the scepter I can defeat you and that mangy dragon without a problem.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		//return;
-	}*/ else if (stageCounter === 7) {
+		//return;*/
+	} else if (stageCounter === 7) {
 		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
         this.king1.evil = true;

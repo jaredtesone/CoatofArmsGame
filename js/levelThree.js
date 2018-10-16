@@ -1,7 +1,7 @@
-var detectRadius = 300;
-var weaponRadius = 100;
-var attackRadius = 100;
-var damageRadius = 5;
+var detectRadius = 500;
+var weaponRadius = 250;
+var attackRadius = 250;
+var damageRadius = 250;
 var slashDamage = 10;
 var thrustDamage = 30;
 var strikeDamage = 20;
@@ -159,8 +159,9 @@ levelThreeState.prototype.update = function() {
 			damage = thrustDamage;
 		}
 		//attack all enemies targeted by swipe
+		console.log(this.player.pointerCross);
 		if (this.player.pointerCross && this.player.swipeCt === 0) {
-			//console.log("attackEnemy");
+			console.log("attackEnemy");
 			this.enemies.forEachAlive(this.attackEnemy, this, damage);
 			this.player.swipeCt++;
 		}
@@ -231,6 +232,7 @@ levelThreeState.prototype.target = function(enemy, attacking) {
 	if (samePoint(enemy.body.position, screenToWorld(this.player.pointer.position), weaponRadius) && samePoint(enemy.body.position, this.player.body.position, attackRadius)) {
 		this.player.pointerCross = attacking;
 		enemy.targeted = attacking;
+		//console.log("targeted");
 	}
 };
 
