@@ -61,8 +61,9 @@ levelFiveState.prototype.create = function() {
 	//this.sign = game.add.sprite(875, 3250, "player");
 
 	//add five bandits that are initially peaceful but will turn hostile
-	this.king1 = new Enemy(875, 1625, "character", "king", false);
+	this.king1 = new Enemy(875, 1625, "king", "king", false);
 	this.enemies.add(this.king1);
+	this.king1.hasScepter = true;
 	//this.bandit2 = new Enemy(2125, 1250, "character", "bandit", false);
 	//this.enemies.add(this.bandit2);
 	//this.bandit3 = new Enemy(2125, 1625, "character", "bandit", false);

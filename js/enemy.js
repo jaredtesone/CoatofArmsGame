@@ -4,6 +4,7 @@ var attack = false;
 var attackTime = 40;
 var lungeWait = 5;
 var retreatWait = 50; 
+var checkFirst = 0;
 
 let Enemy = function (x, y, skin, kind, evil) {
 	Phaser.Sprite.call(this, game, x, y, skin);
@@ -28,6 +29,7 @@ let Enemy = function (x, y, skin, kind, evil) {
 	this.alive = true; 
 	this.lungeCt = 0;
 	this.evil = evil;
+	this.hasScepter = false;
 
 	if (this.kind === "dark knight") {
 		this.animations.add("idleDown", [16], 1, false);
@@ -38,7 +40,7 @@ let Enemy = function (x, y, skin, kind, evil) {
 		this.animations.add("left", [7, 6, 5, 4], 5, true);
 		this.hp = 1000;
 		this.damage = 25;
-	} else if (this.kind = "bandit") {
+	} else if (this.kind === "bandit") {
 		this.animations.add("idleDown", [0], 1, false);
 		this.animations.add("idleUp", [12], 1, false);
 		this.animations.add("idleRight", [22], 1, false);
@@ -50,15 +52,21 @@ let Enemy = function (x, y, skin, kind, evil) {
 		this.hp = 50;
 		this.damage = 10;
 	}
-	else if (this.kind = "king") {
+	else if (this.kind === "king") {
 		this.animations.add("idleDown", [16], 1, false);
 		this.animations.play("idleDown");
 		this.animations.add("down", [15, 14, 13, 12], 5, true);
 		this.animations.add("up", [8, 9, 10, 11], 5, true);
 		this.animations.add("right", [0, 1, 2, 3], 5, true);
 		this.animations.add("left", [7, 6, 5, 4], 5, true);
-		this.hp = 400;
-		this.damage = 50;
+		console.log(this.hasScepter);
+		if (this.hasScepter) {
+			this.hp = 400;
+			this.damage = 50;
+		} else {
+			this.hp = 150;
+			this.damage = 25;
+		}
 	}
 
 };
@@ -68,6 +76,16 @@ Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.update = function() {
+	if (this.kind === "king" && checkFirst === 0) {
+		if (this.hasScepter) {
+			this.hp = 400;
+			this.damage = 50;
+		} else {
+			this.hp = 150;
+			this.damage = 25;
+		}
+	}
+	checkFirst++;
 	if (!this.alive || !this.evil)
 		return;
 	if (this.hostile === true) {

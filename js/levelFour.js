@@ -61,7 +61,7 @@ levelFourState.prototype.create = function() {
 	//this.sign = game.add.sprite(875, 3250, "player");
 
 	//add five bandits that are initially peaceful but will turn hostile
-	this.king1 = new Enemy(875, 1625, "character", "king", false);
+	this.king1 = new Enemy(875, 1625, "king", "king", false);
 	this.enemies.add(this.king1);
 	//this.bandit2 = new Enemy(2125, 1250, "character", "bandit", false);
 	//this.enemies.add(this.bandit2);
@@ -143,6 +143,7 @@ levelFourState.prototype.update = function() {
 			damage = thrustDamage;
 		}
 		//attack all enemies targeted by swipe
+		//console.log(this.player.pointerCross);
 		if (this.player.pointerCross && this.player.swipeCt === 0) {
 			//console.log("attackEnemy");
 			this.enemies.forEachAlive(this.attackEnemy, this, damage);
@@ -215,6 +216,7 @@ levelFourState.prototype.target = function(enemy, attacking) {
 	if (samePoint(enemy.body.position, screenToWorld(this.player.pointer.position), weaponRadius) && samePoint(enemy.body.position, this.player.body.position, attackRadius)) {
 		this.player.pointerCross = attacking;
 		enemy.targeted = attacking;
+		console.log("targeted");
 	}
 };
 
