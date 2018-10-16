@@ -7,6 +7,7 @@ let preloadState = function() {
 preloadState.prototype.preload = function() {
 	game.load.spritesheet("player", "assets/character.png", 32, 48);
 	game.load.spritesheet("character", "assets/CHaracters.png", 125, 125);
+	game.load.spritesheet("mc_all", "assets/mc_all.png", 80, 125);
 	game.load.spritesheet("bandit", "assets/banditFinal.png", 70, 125);
 	game.load.tilemap('TileMap1', 'assets/start.json', null, Phaser.Tilemap.TILED_JSON);
 	game.load.image('TileSheetv2', 'assets/TileSheetv2.png');
@@ -21,6 +22,7 @@ preloadState.prototype.preload = function() {
 	game.load.tilemap("TileMap2", "assets/woods.json", null, Phaser.Tilemap.TILED_JSON);
 	game.load.tilemap("TileMap3", "assets/cave.json", null, Phaser.Tilemap.TILED_JSON);
 	game.load.tilemap("TileMap4", "assets/castle.json", null, Phaser.Tilemap.TILED_JSON);
+
 };
 
 preloadState.prototype.create = function() {
