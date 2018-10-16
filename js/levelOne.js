@@ -30,7 +30,6 @@ levelOneState.prototype.create = function() {
 	game.physics.arcade.enable(this.layerMain);
 	//layerMain.wrap = true;
 
-	//game.add.sprite(0, 0, "sky");
 	this.enemies = game.add.group();
 	this.enemies.enableBody = true;
 	/*this.platforms = game.add.group();
@@ -76,7 +75,6 @@ levelOneState.prototype.update = function() {
 	//if not swiping over any enemies, clear targets
 	if (!this.player.pointerCross)
 		this.enemies.forEachAlive(this.target, this, false);
-	//console.log(this.player.pointerCross);
 	
 	//player attack
 	if (this.player.swipe && this.player.alive) {
@@ -140,7 +138,7 @@ levelOneState.prototype.damagePlayer = function(enemy) {
 	//deal damage to player if attacking and player is not shielding
 	if (enemy.attack && !(this.player.hasShield && this.player.pointer.isDown))
 		this.player.hp -= enemy.damage;
-	//console.log(this.player.hp);
+	console.log("Player health: " + this.player.hp);
 	//kill player if health is depleted
 	if (this.player.hp <= 0) {
 		this.player.alive = false;
@@ -153,10 +151,9 @@ levelOneState.prototype.attackEnemy = function(enemy, damage) {
 	if (!this.player.alive)
 		return;	
 	//deal damage to enemy if targeted
-	//console.log("attack");
 	if (enemy.targeted)
 		enemy.hp -= damage;
-	//console.log(enemy.hp);
+	console.log("Enemy health: " + enemy.hp);
 	//kill enemy if health is depleted
 	if (enemy.hp <= 0) {
 		enemy.alive = false;
@@ -171,7 +168,6 @@ levelOneState.prototype.target = function(enemy, attacking) {
 	if (samePoint(enemy.body.position, screenToWorld(this.player.pointer.position), weaponRadius) && samePoint(enemy.body.position, this.player.body.position, attackRadius)) {
 		this.player.pointerCross = attacking;
 		enemy.targeted = attacking;
-		//console.log(enemy.targeted);
 	}
 };
 
@@ -186,10 +182,7 @@ function followPlayer(enemy, player){
 					enemy.lastVeloX = enemy.body.velocity.x;
 					enemy.lastVeloY = enemy.body.velocity.y;
 				}
-				/*enemy.lastX = enemy.body.x;
-				enemy.lastY = enemy.body.y;*/
 			} else if (enemy.body.velocity.x === 0 && enemy.body.velocity.y === 0 && !enemy.lunging) {
-				console.log("change last");
 				enemy.lastX = enemy.body.x;
 				enemy.lastY = enemy.body.y;
 			}
@@ -205,13 +198,8 @@ function followPlayer(enemy, player){
 			enemy.body.velocity.y = enemyVelocityY * (100/enemyVelocityMult);
 			enemy.lunging = false;
 			enemy.hostile = false;
-
-			//enemy.hostile = true;
-		/*	enemy.lastVeloX = enemy.body.velocity.x;
-			enemy.lastVeloY = enemy.body.velocity.y;*/
 		}
 	}
-	//console.log(enemy.retreating);
 	if (dist >= 0 && dist < attackRadius)
 		enemy.attacking = true;
 	else
