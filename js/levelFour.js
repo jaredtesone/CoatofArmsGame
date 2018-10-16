@@ -13,6 +13,7 @@ var map;
 var layerMain;
 var layerBack;
 var text;
+var level4Music;
 
 // gameState constructor
 let levelFourState = function() {
@@ -20,6 +21,10 @@ let levelFourState = function() {
 };
 
 levelFourState.prototype.create = function() {
+	
+	level4Music = game.add.audio('level4Music');
+	level4Music.play();
+	
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
 	this.map = this.game.add.tilemap("TileMap4", 125, 125, 125, 75);
