@@ -49,6 +49,11 @@ let Player = function (x, y, skin, shield, armor) {
 
 	if (this.armor)
 		this.hp = 200;
+
+	this.animations.add("front", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+	this.animations.add("right", [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 10, true);
+	this.animations.add("left", [24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34], 10, true);
+	this.animations.add("back", [36, 37, 38, 39, 40, 41, 42, 43, 44, 45], 10, true);
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -59,6 +64,19 @@ Player.prototype.update = function() {
 	/*if (this.armor)
 		this.hp = 200;*/
 	this.movement();
+	if (this.body.velocity.x > 0 && this.body.velocity.y > 0){
+		this.animations.play("front");
+	};
+	if (this.body.velocity.x > 0 && this.body.velocity.y < 0){
+		this.animations.play("back");
+	};
+	if (this.body.velocity.x < 0 && this.body.velocity.y < 0){
+		this.animations.play("left");
+	};
+	if (this.body.velocity.x < 0 && this.body.velocity.y > 0){
+		this.animations.play("right");
+	};
+
 };
 
 Player.prototype.movement = function() {
