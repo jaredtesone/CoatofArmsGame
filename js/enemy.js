@@ -86,9 +86,7 @@ Enemy.prototype.update = function() {
 		}
 	}
 	if (this.body.velocity.x === 0 && this.body.velocity.y ===0) {
-		if (this.kind === "bandit") {
-			this.animations.play("idleDown");
-		}
+		this.animations.play("idleDown");
 	} else {
 		//x dominant
 		if (game.math.distance(this.body.velocity.x, 0, 0, 0) >= game.math.distance(0, this.body.velocity.y, 0, 0)) {
