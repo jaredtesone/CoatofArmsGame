@@ -82,7 +82,7 @@ levelThreeState.prototype.create = function() {
 	this.button = game.add.button(0, 875, "buttonBackground", this.loadText, this);
 	this.button.fixedToCamera = true;
 
-	text = game.add.text(0, 875, "Intro text", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	text = game.add.text(0, 875, "Don Quixote wanders out of the clearing and continues aimlessly walking through the forest without a map or supplies \nuntil somehow he ends up near his destination, a foreboding mountain. He begins to climb the mountain and search for \nsigns of a dragon, until he notices a huge cave. He enters the cave.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	text.setTextBounds(0, 0, 2436, 250);
 	text.fixedToCamera = true;
 
@@ -277,13 +277,13 @@ levelThreeState.prototype.loadText = function() {
 	text.fixedToCamera = true;
 	text.setTextBounds(0, 875, 2436, 250);
 	if (stageCounter === 1) {
-		text = game.add.text(0, 875, "how dare ye!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Jose: Who dares enter my sanctuary!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 2) {
-		text = game.add.text(0, 875, "Don Quixote: ye shall not passeth", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: I am here to stop your reign of terror and reclaim the sacred treasure you foul wyrm!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 3) {
-		text = game.add.text(0, 875, "what do you seek?", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 10});
+		text = game.add.text(0, 875, "Jose: Not another one of you “knights”! You’re all the sa- Wait. You’re not like the others… Do you even know what you are being asked to seek?", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 10});
 		/*this.bandit1 = new Enemy(1250, 1500, "character", "bandit", false);
 		this.enemies.add(this.bandit1);
 		this.bandit2 = new Enemy(2375, 1500, "character", "bandit", false);
@@ -294,13 +294,13 @@ levelThreeState.prototype.loadText = function() {
 		this.enemies.add(this.bandit4);*/
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 4) {
-		text = game.add.text(0, 875, "scepter is that whicheth i seekethed", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: The Scepter of Life, the most powerful artifact for good in Valencia!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 5) {
-		text = game.add.text(0, 875, "*dragon laughs*", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "The dragon begins to laugh.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 6) {
-		text = game.add.text(0, 875, "it ain't what u want boi", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Jose: The scepter of life, is that truly what you think? You must be a fool! I shall tell you the tru-", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		//this.bandit5.evil = true;
 	}/* else if (stageCounter === 7) {
@@ -309,7 +309,7 @@ levelThreeState.prototype.loadText = function() {
 		this.button.revive();
 		//return;
 	}*/ else if (stageCounter === 7) {
-		text = game.add.text(0, 875, "I want paella", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 10});
+		text = game.add.text(0, 875, "Don Quixote: I don’t care! I came here to eat paella and kick dragon butt, and I’m all out of paella!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 10});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 8) {
 		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
@@ -318,43 +318,43 @@ levelThreeState.prototype.loadText = function() {
 		this.dragon.evil = true;
 		this.dragon.hp = 500;
 	} else if (stageCounter === 9) {
-		text = game.add.text(0, 875, "dragon shouts wait", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "As the fight continues, the Dragon becomes weaker and weaker until finally he shouts out! \nJose: WAIT! Please stop, let me tell you the truth of your quest!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.dragon.evil = false;
 		this.dragon.hp = 1500;
 		this.button.revive();
 	} else if (stageCounter === 10) {
-		text = game.add.text(0, 875, "no tricks boi", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: No tricks wyrm, you die now!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 11) {
-		text = game.add.text(0, 875, "listen up peasant", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Jose: Please just listen for a minute, otherwise Valencia is doomed!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 12) {
-		text = game.add.text(0, 875, "i'm listening", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: I guess I could spare a second. What do you have to say?", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 13) {
-		text = game.add.text(0, 875, "no tricks boi", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Jose: The artifact you seek is not the Scepter of Life, it is the Scepter of Death. \nPeter the Pious is actually Peter the Necromancer, and he seeks the Scepter of Death to turn all of Valencia into undead abominations that follow his every command. \nIf you give him the Scepter, we are all doomed.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 14) {
-		text = game.add.text(0, 875, "the scepter is a lie!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: Surely you must be lying! But…", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 15) {
-		text = game.add.text(0, 875, "you must be lying", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Jose: On my honor I am not!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 16) {
-		text = game.add.text(0, 625, "narration options", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 625, "Don Quixote doesn’t know what to believe. Surely the king couldn't be evil? Do you \nA: Trust the dragon and confront the king or \nB: Kill the dragon and return the Scepter to the king.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		this.button.kill();
 		//this.buttonA = game.add.button(0, 875, "buttonBackSmall", this.clickA, this);
 		this.buttonA.revive();
-		textA = game.add.text(0, 875, "reject offer", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		textA = game.add.text(0, 875, "Kill dragon", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.buttonB = game.add.button(1218, 875, "buttonBackSmall", this.clickB, this);
 		this.buttonB.revive();
-		textB = game.add.text(1218, 875, "join dragon", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		textB = game.add.text(1218, 875, "Trust dragon", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 17) {
 		if (this.joinDragon)
-			text = game.add.text(0, 875, "join the dragon", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+			text = game.add.text(0, 875, "Don Quixote: I believe you! I shall confront the king!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		else
-			text = game.add.text(0, 875, "you lie!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+			text = game.add.text(0, 875, "Don Quixote: You are clearly lying foul wyrm, and I shall -", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		this.button.revive();
 	} else if (stageCounter === 18) {
 		if (this.joinDragon)
-			text = game.add.text(0, 875, "hop on my back!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+			text = game.add.text(0, 875, "Jose: I will help you, brave adventurer. Hop on my back!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		else
-			text = game.add.text(0, 875, "jose leaves", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+			text = game.add.text(0, 875, "Before Don Quixote can finish his sentence, Jose flies out of his cave and leaves Valencia forever.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 19) {
 		if (this.joinDragon) {
 			//next level
@@ -363,13 +363,13 @@ levelThreeState.prototype.loadText = function() {
 			text.kill();
 			this.button.kill();
 		} else
-			text = game.add.text(0, 875, "that was easy!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+			text = game.add.text(0, 875, "Don Quixote: Hmmm. That was kind of easy wasn’t it…", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 	} else if (stageCounter === 20) {
-		text = game.add.text(0, 875, "search for scepter", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote searches for the scepter, and upon picking it up wanders out of the cave and towards the castle.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		scepter = game.add.sprite(2000, 250, "scepter");
 		this.button.kill();
 	} else if (stageCounter === 21) {
-		text = game.add.text(0, 875, "you get scepter of life", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "You have received the Scepter of Life! Or is it the Scepter of Death?!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		scepter.kill();
 		this.button.revive();
 	} else if (stageCounter === 22) {
