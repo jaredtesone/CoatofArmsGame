@@ -21,8 +21,8 @@ let levelTwoState = function() {
 
 levelOneState.prototype.create = function() {
 	game.physics.startSystem(Phaser.Physics.ARCADE);
-	
-	this.map = this.game.add.tilemap("TileMap2", 125, 125, 125, 75);
+	/*
+	//this.map = this.game.add.tilemap("TileMap2", 125, 125, 125, 75);
 	this.map.addTilesetImage("TileSheetv2", "TileSheetv2");
 	this.layerMain = this.map.createLayer("main");
 	this.layerBack = this.map.createLayer("back");
@@ -31,7 +31,7 @@ levelOneState.prototype.create = function() {
 	this.layerBack.wrap = true;
 	this.map.setCollision([7, 8, 9, 10, 12], true, this.layerMain);
 	game.physics.arcade.enable(this.layerMain);
-	//layerMain.wrap = true;
+	//layerMain.wrap = true;*/
 
 	this.enemies = game.add.group();
 	this.enemies.enableBody = true;

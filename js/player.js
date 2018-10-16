@@ -44,6 +44,7 @@ let Player = function (x, y, skin, shield) {
 	this.hasShield = shield;
 	this.cameraPt = new Phaser.Point(-1, -1);
 	this.stationary = false;
+	this.buttonPressed = false;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -57,10 +58,10 @@ Player.prototype.update = function() {
 Player.prototype.movement = function() {
 	if (!this.alive)
 		return;
-	if (this.stationary) {
+	/*if (this.stationary) {
 		this.body.velocity.x = 0;
 		this.body.velocity.y = 0;
-	}
+	}*/
 
 	//stop moving if at destination
 	if (samePoint(destPoint, nullPoint) || samePoint(this.body.position, destPoint, 5) || !(this.tap || this.doubleTap)) {
@@ -81,20 +82,25 @@ Player.prototype.movement = function() {
 	touch = this.pointer.leftButton;
 	if (touch.justPressed()) {
 		//get initial location of tap;	
-		relCt = 0;
-		if (pressCt === 0) {
-			this.startPoint = screenToWorld(this.pointer.position);
-			posUp = this.pointer.position;
+		if (!(this.pointer.y >= 875 && this.buttonPressed)) {
+			this.stationary = false;
+			relCt = 0;
+			if (pressCt === 0) {
+				this.startPoint = screenToWorld(this.pointer.position);
+				posUp = this.pointer.position;
+			} else
+				posUp = this.pointer.positionUp;
+			if (resetCt === 0) {
+				this.pointerCross = false;
+				resetCt++;
+			}
+			console.log("start: (" + this.startPoint.x + ", " + this.startPoint.y + ")");
+			pressCt++;
 		} else
-			posUp = this.pointer.positionUp;
-		if (resetCt === 0) {
-			this.pointerCross = false;
-			resetCt++;
-		}
-		pressCt++;
+			this.stationary = true;
 	}
 	//touch input
-	if (touch.justReleased()) {
+	if (touch.justReleased() && !this.stationary) {
 		pressCt = 0;
 		//get final location of tap
 		if (relCt === 0) {
