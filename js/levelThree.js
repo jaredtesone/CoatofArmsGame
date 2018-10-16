@@ -125,10 +125,11 @@ levelThreeState.prototype.update = function() {
 	}*/
 
 	if (stageCounter === 8 && this.dragon.hp <= 25) {
+		this.dragon.hp = 1500;
 		this.loadText();
 	}
 
-	if (stageCounter === 20 && getDist(this.player.position, scepter.position) <= 10)
+	if (stageCounter === 20 && getDist(this.player.position, scepter.position) <= 100)
 		this.loadText();
 	//enemies will chase down player within certain detection radius
 	this.enemies.forEachAlive(followPlayer, this, this.player);
@@ -161,7 +162,7 @@ levelThreeState.prototype.update = function() {
 		//attack all enemies targeted by swipe
 		console.log(this.player.pointerCross);
 		if (this.player.pointerCross && this.player.swipeCt === 0) {
-			console.log("attackEnemy");
+			//console.log("attackEnemy");
 			this.enemies.forEachAlive(this.attackEnemy, this, damage);
 			this.player.swipeCt++;
 		}
@@ -355,8 +356,10 @@ levelThreeState.prototype.loadText = function() {
 	} else if (stageCounter === 18) {
 		if (this.joinDragon)
 			text = game.add.text(0, 875, "Jose: I will help you, brave adventurer. Hop on my back!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
-		else
+		else {
 			text = game.add.text(0, 875, "Before Don Quixote can finish his sentence, Jose flies out of his cave and leaves Valencia forever.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+			this.dragon.kill();
+		}
 	} else if (stageCounter === 19) {
 		if (this.joinDragon) {
 			//next level

@@ -51,6 +51,12 @@ let Enemy = function (x, y, skin, kind, evil) {
 		this.damage = 10;
 	}
 	else if (this.kind = "king") {
+		this.animations.add("idleDown", [16], 1, false);
+		this.animations.play("idleDown");
+		this.animations.add("down", [15, 14, 13, 12], 5, true);
+		this.animations.add("up", [8, 9, 10, 11], 5, true);
+		this.animations.add("right", [0, 1, 2, 3], 5, true);
+		this.animations.add("left", [7, 6, 5, 4], 5, true);
 		this.hp = 400;
 		this.damage = 50;
 	}
