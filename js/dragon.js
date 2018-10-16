@@ -3,9 +3,20 @@ var hostile = false;
 var attack = false;
 var attackTime = 40;
 var lungeWait = 5;
-var retreatWait = 50; 
+var retreatWait = 50;
+var fireReady = false;
+var fireSound;
 
 let Dragon = function (x, y, skin, evil) {
+	
+	timer = game.time.create(false);
+	
+	//  Set a TimerEvent to occur after 2 seconds
+	timer.loop(1500, readyFire, this);
+	timer.start();
+	
+	fireSound = game.add.audio('dragon-fire-ball');
+	
 	Phaser.Sprite.call(this, game, x, y, skin);
 	game.physics.arcade.enable(this);
 	game.add.existing(this);
@@ -47,10 +58,16 @@ Dragon.prototype = Object.create(Phaser.Sprite.prototype);
 Dragon.prototype.constructor = Dragon;
 
 Dragon.prototype.update = function() {
-	if (!this.evil)
+	if (!this.evil) {
 		this.animations.play("idle");
-	else
+	}
+	else {
 		this.animations.play("hostile");
+		if (fireReady) {
+			fireSound.play();
+			fireReady = false;
+		}
+	}
 	if (!this.alive || !this.evil)
 		return;
 	if (this.hostile === true) {
@@ -99,4 +116,8 @@ Dragon.prototype.retreat = function() {
 
 function samePoint(point1, point2, epsilon) {
 	return (game.math.fuzzyEqual(point1.x, point2.x, epsilon) && game.math.fuzzyEqual(point1.y, point2.y, epsilon));
+};
+
+function readyFire() {
+	fireReady = true;	
 };
