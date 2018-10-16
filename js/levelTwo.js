@@ -48,7 +48,7 @@ levelTwoState.prototype.create = function() {
 	ground.body.immovable = true;
 	//game.physics.arcade.enable(this.ground);*/
 
-	this.player = new Player(2000, 1500, "mc_all", true, false);
+	this.player = new Player(2000, 1500, "player", true, false);
 	game.physics.arcade.enable(this.player);
 	game.camera.follow(this.player, game.camera.FOLLOW_TOPDOWN);
 
@@ -271,13 +271,13 @@ levelTwoState.prototype.loadText = function() {
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 3) {
 		text = game.add.text(0, 875, "5 other bandits step out from the behind the trees they were hiding in.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 10});
-		this.bandit1 = new Enemy(1250, 1500, "character", "bandit", false);
+		this.bandit1 = new Enemy(1250, 1500, "bandit", "bandit", false);
 		this.enemies.add(this.bandit1);
-		this.bandit2 = new Enemy(2375, 1500, "character", "bandit", false);
+		this.bandit2 = new Enemy(2375, 1500, "bandit", "bandit", false);
 		this.enemies.add(this.bandit2);
-		this.bandit3 = new Enemy(2125, 875, "character", "bandit", false);
+		this.bandit3 = new Enemy(2125, 875, "bandit", "bandit", false);
 		this.enemies.add(this.bandit3);
-		this.bandit4 = new Enemy(1375, 1125, "character", "bandit", false);
+		this.bandit4 = new Enemy(1375, 1125, "bandit", "bandit", false);
 		this.enemies.add(this.bandit4);
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 4) {

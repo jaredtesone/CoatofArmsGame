@@ -30,6 +30,12 @@ let Enemy = function (x, y, skin, kind, evil) {
 	this.evil = evil;
 
 	if (this.kind === "dark knight") {
+		this.animations.add("idleDown", [16], 1, false);
+		this.animations.play("idleDown");
+		this.animations.add("down", [15, 14, 13, 12], 5, true);
+		this.animations.add("up", [8, 9, 10, 11], 5, true);
+		this.animations.add("right", [0, 1, 2, 3], 5, true);
+		this.animations.add("left", [7, 6, 5, 4], 5, true);
 		this.hp = 1000;
 		this.damage = 25;
 	} else if (this.kind = "bandit") {
@@ -37,10 +43,10 @@ let Enemy = function (x, y, skin, kind, evil) {
 		this.animations.add("idleUp", [12], 1, false);
 		this.animations.add("idleRight", [22], 1, false);
 		this.animations.add("idleLeft", [45], 1, false);
-		this.animations.add("down", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 15, true);
-		this.animations.add("up", [13, 14, 15, 16, 17, 18, 19, 20, 21], 15, true);
-		this.animations.add("right", [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33], 15, true);
-		this.animations.add("left", [44, 43, 42, 41, 40, 39, 38, 37, 36, 35], 15, true);
+		this.animations.add("down", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+		this.animations.add("up", [13, 14, 15, 16, 17, 18, 19, 20, 21], 10, true);
+		this.animations.add("right", [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33], 10, true);
+		this.animations.add("left", [44, 43, 42, 41, 40, 39, 38, 37, 36, 35], 10, true);
 		this.hp = 50;
 		this.damage = 10;
 	}
@@ -85,7 +91,7 @@ Enemy.prototype.update = function() {
 			}
 		}
 	}
-	if (this.body.velocity.x === 0 && this.body.velocity.y ===0) {
+	if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
 		this.animations.play("idleDown");
 	} else {
 		//x dominant

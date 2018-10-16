@@ -291,10 +291,12 @@ levelFiveState.prototype.loadText = function() {
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
         this.button.kill();
 	} else if (stageCounter === 9) {
-		text = game.add.text(0, 875, "Blacksmith: YOU THERE, HELP ME PLEASE! There are bandits ransacking my shop! If you stop them, i’ll give you this MAGIC shield!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//text = game.add.text(0, 875, "Blacksmith: YOU THERE, HELP ME PLEASE! There are bandits ransacking my shop! If you stop them, i’ll give you this MAGIC shield!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		this.button.revive();
-	} else if (stageCounter === 10) {
+		//this.button.revive();
+		//victory!
+		console.log("victory");
+	} /*else if (stageCounter === 10) {
 		text = game.add.text(0, 875, "Don Quixote: Okay no problem, do you have a sword I can borrow?", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 11) {
@@ -341,7 +343,7 @@ levelFiveState.prototype.loadText = function() {
 	} else if (stageCounter === 21) {
 		console.log("next level");
 		//game.state.start("LevelTwo");
-	}
+	}*/
 	text.setTextBounds(0, 0, 2436, 250);
 	text.fixedToCamera = true;
 	//this.player.buttonPressed = false;

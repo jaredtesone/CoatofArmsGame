@@ -280,20 +280,21 @@ levelFourState.prototype.loadText = function() {
 	} else if (stageCounter === 6) {
 		text = game.add.text(0, 875, "Don Quixote: Now you will pay for your sins, foul king.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-	} else if (stageCounter === 7) {
+	/*} else if (stageCounter === 7) {
 		text = game.add.text(0, 875, "Peter: Fool, even without the scepter I can defeat you and that mangy dragon without a problem.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		//return;
-	} else if (stageCounter === 8) {
-		text = game.add.text(0, 875, ".", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
+	}*/ else if (stageCounter === 7) {
+		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
         this.king1.evil = true;
         this.button.kill();
 	} else if (stageCounter === 9) {
-		text = game.add.text(0, 875, "Blacksmith: YOU THERE, HELP ME PLEASE! There are bandits ransacking my shop! If you stop them, i’ll give you this MAGIC shield!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//text = game.add.text(0, 875, "Blacksmith: YOU THERE, HELP ME PLEASE! There are bandits ransacking my shop! If you stop them, i’ll give you this MAGIC shield!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		this.button.revive();
-	} else if (stageCounter === 10) {
+		//this.button.revive();
+		console.log("victory!");
+	} /*else if (stageCounter === 10) {
 		text = game.add.text(0, 875, "Don Quixote: Okay no problem, do you have a sword I can borrow?", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 11) {
@@ -340,7 +341,7 @@ levelFourState.prototype.loadText = function() {
 	} else if (stageCounter === 21) {
 		console.log("next level");
 		//game.state.start("LevelTwo");
-	}
+	}*/
 	text.setTextBounds(0, 0, 2436, 250);
 	text.fixedToCamera = true;
 	//this.player.buttonPressed = false;
