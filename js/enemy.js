@@ -36,6 +36,10 @@ let Enemy = function (x, y, skin, kind, evil) {
 		this.hp = 50;
 		this.damage = 25;
 	}
+	else if (this.kind = "king") {
+		this.hp = 400;
+		this.damage = 50;
+	}
 
 };
 

@@ -56,8 +56,8 @@ levelFiveState.prototype.create = function() {
 	//this.sign = game.add.sprite(875, 3250, "player");
 
 	//add five bandits that are initially peaceful but will turn hostile
-	this.bandit1 = new Enemy(875, 1625, "character", "bandit", false);
-	this.enemies.add(this.bandit1);
+	this.king1 = new Enemy(875, 1625, "character", "king", false);
+	this.enemies.add(this.king1);
 	//this.bandit2 = new Enemy(2125, 1250, "character", "bandit", false);
 	//this.enemies.add(this.bandit2);
 	//this.bandit3 = new Enemy(2125, 1625, "character", "bandit", false);
@@ -271,7 +271,8 @@ levelFiveState.prototype.loadText = function() {
 		text = game.add.text(0, 875, "Peter: Defeat me? While I have the most powerful magical item in existence? HA!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 6) {
-		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+        text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+        this.king1.evil = true;
         this.button.kill();
         //this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 7) {

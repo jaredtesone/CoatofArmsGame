@@ -56,8 +56,8 @@ levelFourState.prototype.create = function() {
 	//this.sign = game.add.sprite(875, 3250, "player");
 
 	//add five bandits that are initially peaceful but will turn hostile
-	this.bandit1 = new Enemy(875, 1625, "character", "bandit", false);
-	this.enemies.add(this.bandit1);
+	this.king1 = new Enemy(875, 1625, "character", "king", false);
+	this.enemies.add(this.king1);
 	//this.bandit2 = new Enemy(2125, 1250, "character", "bandit", false);
 	//this.enemies.add(this.bandit2);
 	//this.bandit3 = new Enemy(2125, 1625, "character", "bandit", false);
@@ -280,6 +280,7 @@ levelFourState.prototype.loadText = function() {
 	} else if (stageCounter === 8) {
 		text = game.add.text(0, 875, ".", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+        this.king1.evil = true;
         this.button.kill();
 	} else if (stageCounter === 9) {
 		text = game.add.text(0, 875, "Blacksmith: YOU THERE, HELP ME PLEASE! There are bandits ransacking my shop! If you stop them, i’ll give you this MAGIC shield!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
@@ -298,7 +299,7 @@ levelFourState.prototype.loadText = function() {
 	} else if (stageCounter === 13) {
 		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		this.button.kill();
+        this.button.kill();
 		//return;
 	} else if (stageCounter === 14) {
 		text = game.add.text(0, 875, "Don Quixote enters the shop and sees a handful of bandits trashing the shop and searching for anything valuable.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
