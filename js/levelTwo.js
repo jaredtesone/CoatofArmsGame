@@ -15,14 +15,14 @@ var layerBack;
 var text;
 
 // gameState constructor
-let levelOneState = function() {
+let levelTwoState = function() {
 	this.score = 0;
 };
 
 levelOneState.prototype.create = function() {
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
-	this.map = this.game.add.tilemap("TileMap1", 125, 125, 125, 75);
+	this.map = this.game.add.tilemap("TileMap2", 125, 125, 125, 75);
 	this.map.addTilesetImage("TileSheetv2", "TileSheetv2");
 	this.layerMain = this.map.createLayer("main");
 	this.layerBack = this.map.createLayer("back");
@@ -43,12 +43,12 @@ levelOneState.prototype.create = function() {
 	ground.body.immovable = true;
 	//game.physics.arcade.enable(this.ground);*/
 
-	this.player = new Player(5000, 4625, "player", false);
+	this.player = new Player(5000, 4625, "player", true);
 	game.physics.arcade.enable(this.player);
 	game.camera.follow(this.player, game.camera.FOLLOW_TOPDOWN);
 
 	//add peaceful NPCs	
-	this.peasant1 = game.add.sprite(4750, 4650, "peasant");
+/*	this.peasant1 = game.add.sprite(4750, 4650, "peasant");
 	this.peasant2 = game.add.sprite(4750, 4600, "peasant");
 	this.knight = game.add.sprite(4625, 4675, "royalKnight");
 	this.blacksmith = game.add.sprite(2250, 2375, "blacksmith");
@@ -63,7 +63,7 @@ levelOneState.prototype.create = function() {
 	this.bandit3 = new Enemy(2125, 1625, "bandit", "bandit", false);
 	this.enemies.add(this.bandit3);
 	this.bandit4 = new Enemy(1625, 1625, "bandit", "bandit", false);
-	this.enemies.add(this.bandit4);
+	this.enemies.add(this.bandit4);*/
 /*	this.bandit5 = new Enemy(1875, 1500, "bandit", "bandit", false);
 	this.enemies.add(this.bandit5);*/
 
@@ -80,7 +80,7 @@ levelOneState.prototype.create = function() {
 	
 };
 
-levelOneState.prototype.update = function() {
+levelTwoState.prototype.update = function() {
 	game.physics.arcade.collide(this.enemies);
 	game.physics.arcade.collide(this.enemies, this.layerMain);
 	game.physics.arcade.collide(this.player, this.layerMain);
@@ -162,7 +162,7 @@ levelOneState.prototype.update = function() {
 	}*/
 };
 
-levelOneState.prototype.damagePlayer = function(enemy) {
+levelTwoState.prototype.damagePlayer = function(enemy) {
 	if (!this.player.alive || !enemy.evil)
 		return;
 	//deal damage to player if attacking and player is not shielding
@@ -177,7 +177,7 @@ levelOneState.prototype.damagePlayer = function(enemy) {
 	}
 }
 
-levelOneState.prototype.attackEnemy = function(enemy, damage) {
+levelTwoState.prototype.attackEnemy = function(enemy, damage) {
 	if (!this.player.alive)
 		return;	
 	//deal damage to enemy if targeted
@@ -191,7 +191,7 @@ levelOneState.prototype.attackEnemy = function(enemy, damage) {
 	}
 };
 
-levelOneState.prototype.target = function(enemy, attacking) {
+levelTwoState.prototype.target = function(enemy, attacking) {
 	if (!this.player.alive)
 		return;	
 	//must be swiping within 5 pixels of enemy, and player can be no farther than 5 pixels away from enemy in order to target enemy

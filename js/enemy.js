@@ -5,7 +5,7 @@ var attackTime = 40;
 var lungeWait = 5;
 var retreatWait = 50; 
 
-let Enemy = function (x, y, skin, kind) {
+let Enemy = function (x, y, skin, kind, evil) {
 	Phaser.Sprite.call(this, game, x, y, skin);
 	game.physics.arcade.enable(this);
 	game.add.existing(this);
@@ -16,7 +16,8 @@ let Enemy = function (x, y, skin, kind) {
 	this.retreating = false;
 	this.lunging = false;
 	this.hostile = false;
-	this.body.velocity.x = 50;
+	this.body.velocity.x = 0;
+	this.body.velocity.y = 0;
 	this.follow = false;
 	this.kind = kind;
 	this.lastX = 0;
@@ -26,6 +27,7 @@ let Enemy = function (x, y, skin, kind) {
 	this.targeted = false;
 	this.alive = true; 
 	this.lungeCt = 0;
+	this.evil = evil;
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -33,7 +35,7 @@ Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.update = function() {
-	if (!this.alive)
+	if (!this.alive || !this.evil)
 		return;
 	if (this.hostile === true) {
 		
@@ -65,7 +67,7 @@ Enemy.prototype.update = function() {
 };
 
 Enemy.prototype.retreat = function() {
-	if (!this.alive)
+	if (!this.alive || !this.evil)
 		return;
 	this.retreating = true;
 	this.body.velocity.x = 0 - this.lastVeloX;

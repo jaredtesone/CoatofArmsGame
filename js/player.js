@@ -1,8 +1,8 @@
 var tapTime = 500;
 var tapMoveLimit = 5;
 var doubleTapTime = 500;
-var tap = false;
-var doubleTap = false;
+//var tap = false;
+//var doubleTap = false;
 var chargeTime = 2000;
 var destPoint = new Phaser.Point(-1, -1);
 var nullPoint = new Phaser.Point(-1, -1);
@@ -33,6 +33,8 @@ let Player = function (x, y, skin, shield) {
 	this.swipe = false;
 	this.hold = false;
 	this.drag = false;
+	this.tap = false;
+	this.doubleTap = false;
 	this.pointerCross = false;
 	this.swipeCt = 0;
 	this.dragCt = 0;
@@ -41,6 +43,7 @@ let Player = function (x, y, skin, shield) {
 	this.shieldCharge = 0;
 	this.hasShield = shield;
 	this.cameraPt = new Phaser.Point(-1, -1);
+	this.stationary = false;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -54,8 +57,13 @@ Player.prototype.update = function() {
 Player.prototype.movement = function() {
 	if (!this.alive)
 		return;
+	if (this.stationary) {
+		this.body.velocity.x = 0;
+		this.body.velocity.y = 0;
+	}
+
 	//stop moving if at destination
-	if (samePoint(destPoint, nullPoint) || samePoint(this.body.position, destPoint, 5) || !(tap || doubleTap)) {
+	if (samePoint(destPoint, nullPoint) || samePoint(this.body.position, destPoint, 5) || !(this.tap || this.doubleTap)) {
 		this.body.velocity.x = 0;
 		this.body.velocity.y = 0;
 	} else {
@@ -103,7 +111,7 @@ Player.prototype.movement = function() {
 			if (getDist(posUp, posDown) >= 0 && getDist(posUp, posDown) < tapMoveLimit) {
 				//check for double tap
 				this.hold = this.drag = false;
-				if ((previousTap > 0 && (touch.timeDown - previousTap > 0 && touch.timeDown - previousTap <= doubleTapTime)) || doubleTap) {
+				if ((previousTap > 0 && (touch.timeDown - previousTap > 0 && touch.timeDown - previousTap <= doubleTapTime)) || this.doubleTap) {
 					//double tap
 					if (dodgeCt < 1) {
 						//dodge in direction of input
@@ -119,14 +127,14 @@ Player.prototype.movement = function() {
 					}
 					dodgeCt++;
 					this.swipeCt = this.dragCt = 0;
-					doubleTap = tap = true;
+					this.doubleTap = this.tap = true;
 					this.swipe = false;
 					console.log("double tap");					
 					dodgeMult = 2;
 				} else {	//single tap
-					doubleTap = this.swipe = false;
+					this.doubleTap = this.swipe = false;
 					dodgeCt = this.swipeCt = this.dragCt = 0;
-					tap = true;
+					this.tap = true;
 					console.log("tap");
 					destPoint = this.startPoint;
 					dodgeMult = 1;
@@ -134,14 +142,14 @@ Player.prototype.movement = function() {
 				previousTap = touch.timeUp;
 			} else {	//swipe
 				dodgeCt = this.dragCt = 0;
-				tap = doubleTap = false;
+				this.tap = this.doubleTap = false;
 				this.swipe = true;
 				console.log("swipe");
 				//get swipe vector
 				this.swipeAngle = game.math.angleBetweenPoints(this.startPoint, this.endPoint);
 			}
 		} else {
-			this.swipe = tap = doubleTap = false;
+			this.swipe = this.tap = this.doubleTap = false;
 			dodgeCt = this.swipeCt = this.dragCt = 0;
 			if (movDist >= 0 && movDist < tapMoveLimit) {
 				//tap and hold
@@ -159,7 +167,7 @@ Player.prototype.movement = function() {
 		}
 		relCt++;
 	} else {
-		this.swipe = doubleTap = false;
+		this.swipe = this.doubleTap = false;
 		dodgeCt = this.swipeCt = this.dragCt = 0;
 	}
 	/*if (this.cursors.left.isDown && !this.cursors.right.isDown) {
