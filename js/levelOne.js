@@ -52,13 +52,14 @@ levelOneState.prototype.create = function() {
 	game.physics.arcade.enable(this.player);
 	game.camera.follow(this.player, game.camera.FOLLOW_TOPDOWN);
 
-	//add peaceful NPCs	
-	this.peasant1 = game.add.sprite(4750, 4675, "character");
-	this.peasant2 = game.add.sprite(4750, 4575, "character");
-	this.knight = game.add.sprite(4625, 4675, "player");
-	this.blacksmith = game.add.sprite(2250, 2375, "character");
 
-	this.sign = game.add.sprite(4625, 4625, "player");
+	this.sign = game.add.sprite(4625, 4625, "sign");
+	//add peaceful NPCs	
+	this.peasant1 = game.add.sprite(4750, 4675, "npc");
+	this.peasant2 = game.add.sprite(4750, 4575, "npc");
+	this.knight = game.add.sprite(4625, 4675, "knight");
+	this.blacksmith = game.add.sprite(2250, 2375, "blacksmith");
+
 
 	//add five bandits that are initially peaceful but will turn hostile
 	this.bandit1 = new Enemy(1625, 1250, "bandit", "bandit", false);
@@ -188,6 +189,7 @@ levelOneState.prototype.damagePlayer = function(enemy) {
 	if (this.player.hp <= 0) {
 		this.player.alive = false;
 		this.player.kill();
+		this.defeat = game.sprite.add("defeat");
 		//game over?
 	}
 }

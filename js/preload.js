@@ -13,6 +13,12 @@ preloadState.prototype.preload = function() {
 	game.load.spritesheet("dragon", "assets/dragon.png", 250, 125);
 	game.load.spritesheet("king", "assets/king.png", 70, 125);
 	game.load.image("scepter", "assets/scepter.png", 125, 125);
+	game.load.image("sign", "assets/sign.png", 125, 125);
+	game.load.image("blacksmith", "assets/blacksmith.png", 125, 125);
+	game.load.image("npc", "assets/npc.png", 125, 125);
+	game.load.image("knight", "assets/singleknight.png", 125, 125);
+	game.load.image("victory", "assets/victory.png", 2436, 1125);
+	game.load.image("defeat", "assets/defeat.png", 2436, 1125);
 	game.load.tilemap('TileMap1', 'assets/start.json', null, Phaser.Tilemap.TILED_JSON);
 	game.load.image('TileSheetv2', 'assets/TileSheetv2.png');
 	
