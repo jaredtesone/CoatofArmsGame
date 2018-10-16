@@ -47,7 +47,7 @@ levelTwoState.prototype.create = function() {
 	game.physics.arcade.enable(this.player);
 	game.camera.follow(this.player, game.camera.FOLLOW_TOPDOWN);
 
-	this.darkKnight = new Enemy(2000, 1125, "darkKnight", "dark knight", true);
+	this.darkKnight = new Enemy(2000, 1125, "darkKnight", "dark knight", false);
 	this.enemies.add(this.darkKnight);
 
 	//add peaceful NPCs	
@@ -287,6 +287,8 @@ levelTwoState.prototype.loadText = function() {
 		this.bandit2.evil = true;
 		this.bandit3.evil = true;
 		this.bandit4.evil = true;
+		this.darkKnight.evil = true;
+		this.darkKnight.hp = 150;
 		//this.bandit5.evil = true;
 	}/* else if (stageCounter === 7) {
 		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});

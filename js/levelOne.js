@@ -330,7 +330,7 @@ levelOneState.prototype.loadText = function() {
 		this.player.hasShield = true;
 	} else if (stageCounter === 21) {
 		console.log("next level");
-		//game.state.start("LevelTwo");
+		game.state.start("LevelTwo");
 	}
 	text.setTextBounds(0, 0, 2436, 250);
 	text.fixedToCamera = true;

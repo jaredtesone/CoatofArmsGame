@@ -21,7 +21,7 @@ preloadState.prototype.preload = function() {
 var level1Music;
 
 preloadState.prototype.create = function() {
-	game.state.start("LevelTwo");
+	game.state.start("LevelOne");
 	level1Music = game.add.audio('level1Music');
 	level1Music.play();
 };

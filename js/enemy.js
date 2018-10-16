@@ -30,7 +30,7 @@ let Enemy = function (x, y, skin, kind, evil) {
 	this.evil = evil;
 
 	if (this.kind === "dark knight") {
-		this.hp = 150;
+		this.hp = 1000;
 		this.damage = 25;
 	} else if (this.kind = "bandit") {
 		this.hp = 50;
