@@ -16,10 +16,13 @@ preloadState.prototype.preload = function() {
 	game.load.audio('level5Music', 'assets/audio/music/Level 5 (Castle, Help King, Sinister).mp3');
 	game.load.image("buttonBackground", "assets/buttonBackground.png");
 	game.load.tilemap("TileMap2", "assets/woods.json", null, Phaser.Tilemap.TILED_JSON);
+	game.load.tilemap("TileMap4", "assets/castle.json", null, Phaser.Tilemap.TILED_JSON);
 };
 
 preloadState.prototype.create = function() {
 	game.state.start("LevelOne");
+	level1Music = game.add.audio('level1Music');
+	level1Music.play();
 };
 
 preloadState.prototype.update = function() {
