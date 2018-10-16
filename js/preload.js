@@ -51,7 +51,7 @@ preloadState.prototype.preload = function() {
 };
 
 preloadState.prototype.create = function() {
-	game.state.start("LevelFive");
+	game.state.start("LevelOne");
 };
 
 preloadState.prototype.update = function() {
