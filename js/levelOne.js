@@ -48,8 +48,8 @@ levelOneState.prototype.create = function() {
 	game.camera.follow(this.player, game.camera.FOLLOW_TOPDOWN);
 
 	//add peaceful NPCs	
-	this.peasant1 = game.add.sprite(4750, 4650, "character");
-	this.peasant2 = game.add.sprite(4750, 4600, "character");
+	this.peasant1 = game.add.sprite(4750, 4675, "character");
+	this.peasant2 = game.add.sprite(4750, 4575, "character");
 	this.knight = game.add.sprite(4625, 4675, "player");
 	this.blacksmith = game.add.sprite(2250, 2375, "character");
 
@@ -70,7 +70,7 @@ levelOneState.prototype.create = function() {
 	this.button = game.add.button(0, 875, "buttonBackground", this.loadText, this);
 	this.button.fixedToCamera = true;
 
-	text = game.add.text(0, 875, "Intro text", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	text = game.add.text(0, 875, "Peasants are gathered around a sign, talking excitedly. A royal knight stands by watching them.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle",strokeThickness: 2});
 	text.setTextBounds(0, 0, 2436, 250);
 	text.fixedToCamera = true;
 
@@ -100,11 +100,11 @@ levelOneState.prototype.update = function() {
 		this.loadText();
 	}
 
-	if (stageCounter === 11 && getDist(this.player.position, new Phaser.Point(1950, 2000)) <= 200) {
+	if (stageCounter === 13 && getDist(this.player.position, new Phaser.Point(1950, 2000)) <= 200) {
 		this.loadText();
 	}
 
-	if (stageCounter === 15 && this.enemies.countLiving() === 0) {
+	if (stageCounter === 17 && this.enemies.countLiving() === 0) {
 		this.loadText();
 	}
 	//enemies will chase down player within certain detection radius
@@ -254,22 +254,22 @@ levelOneState.prototype.loadText = function() {
 	text.fixedToCamera = true;
 	text.setTextBounds(0, 875, 2436, 250);
 	if (stageCounter === 1) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "ADVENTURERS WANTED: The evil dragon Jose has captured the sacred relic known as the Scepter of Life. \nThis scepter is so powerful it would enable everyone in the kingdom to live forever, but only if it can be recovered by a brave adventurer such as yourself.\n His Royal Majesty, Peter the Pious, has issued a royal decree that anyone who recovers the scepter will receive 1000 gold coins and the title of Royal Knight.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 2) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Peasant 1: Wow can you believe that? I've always wanted to be a Royal Knight, ever since I was a young lad!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 3) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Peasant 2: You're an idiot, there is no way they would let common peasants like us become Royal Knights, clearly they just want brave knights to search for it.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 4) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Royal Knight: Fear not peasants, King Peter will be extremely generous to whoever recovers the scepter, regardless of their blood!*under breath: not that either of you fools have a chance*", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 5) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: This is my chance, finally I can fulfill my destiny and become the greatest hero Valencia has ever known!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 6) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Royal Knight: You look like a hearty fellow, perhaps you can recover the scepter! \nYou’ll need equipment, the blacksmith’s shop is yonder. Go to the end of the road on the left and then head up until you see it!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 7) {
 		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
@@ -277,32 +277,39 @@ levelOneState.prototype.loadText = function() {
 		this.button.kill();
 		//return;
 	} else if (stageCounter === 8) {
-		text = game.add.text(0, 875, "blacksmith stuff", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote walks up the road to the blacksmith, but then he hears shouts and the clash of metal.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.button.revive();
 	} else if (stageCounter === 9) {
-		text = game.add.text(0, 875, "player response", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Blacksmith: YOU THERE, HELP ME PLEASE! There are bandits ransacking my shop! If you stop them, i’ll give you this MAGIC shield!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		this.button.revive();
 	} else if (stageCounter === 10) {
-		text = game.add.text(0, 875, "blacksmith gives sword", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		text = game.add.text(0, 875, "Don Quixote: Okay no problem, do you have a sword I can borrow?", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+	} else if (stageCounter === 11) {
+		text = game.add.text(0, 875, "Blacksmith: Here you go! *under breath: amateur*", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		damageReduc = 1;
-	} else if (stageCounter === 11) {
-		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	} else if (stageCounter === 12) {
+		text = game.add.text(0, 875, "You have received a Rusty Sword!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+	} else if (stageCounter === 13) {
+		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.button.kill();
 		//return;
-	} else if (stageCounter === 12) {
-		text = game.add.text(0, 875, "bandit text", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	} else if (stageCounter === 14) {
+		text = game.add.text(0, 875, "Don Quixote enters the shop and sees a handful of bandits trashing the shop and searching for anything valuable.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.button.revive();
-	} else if (stageCounter === 13) {
-		text = game.add.text(0, 875, "player response", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
-		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-	} else if (stageCounter === 14) {
-		text = game.add.text(0, 875, "bandit laughter", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
-		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 15) {
+		text = game.add.text(0, 875, "Don Quixote: You fools should never have come here, you will pay with your lives!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+	} else if (stageCounter === 16) {
+		text = game.add.text(0, 875, "The bandits simply laugh.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+	} else if (stageCounter === 17) {
 		this.button.kill();
 		this.bandit1.evil = true;
 		this.bandit2.evil = true;
@@ -310,18 +317,18 @@ levelOneState.prototype.loadText = function() {
 		this.bandit4.evil = true;
 		//this.bandit5.evil = true;
 		//return;
-	} else if (stageCounter === 16) {
-		text = game.add.text(0, 875, "player victory", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	} else if (stageCounter === 18) {
+		text = game.add.text(0, 875, "Don Quixote: Blacksmith, your shop is safe now, though I fear quite a bit of it was destroyed in the scuffle.", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.button.revive();
-	} else if (stageCounter === 17) {
-		text = game.add.text(0, 875, "blacksmith crying", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	} else if (stageCounter === 19) {
+		text = game.add.text(0, 875, "Blacksmith (holding back tears): It’ll be okay… Here’s your shield. The cursed woods are down and to your left!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-	} else if (stageCounter == 18) {
-		text = game.add.text(0, 875, "get shield", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	} else if (stageCounter == 20) {
+		text = game.add.text(0, 875, "You have received Magic Shield! (You can now cast shield bash (one cast only))", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle", strokeThickness: 2});
 		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.player.hasShield = true;
-	} else if (stageCounter === 19) {
+	} else if (stageCounter === 21) {
 		console.log("next level");
 		//game.state.start("LevelTwo");
 	}
