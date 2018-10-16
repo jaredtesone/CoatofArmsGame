@@ -19,12 +19,11 @@ preloadState.prototype.preload = function() {
 	game.load.tilemap("TileMap2", "assets/woods.json", null, Phaser.Tilemap.TILED_JSON);
 	game.load.tilemap("TileMap2", "assets/woods.json", null, Phaser.Tilemap.TILED_JSON);
 	game.load.tilemap("TileMap3", "assets/cave.json", null, Phaser.Tilemap.TILED_JSON);
+	game.load.tilemap("TileMap4", "assets/castle.json", null, Phaser.Tilemap.TILED_JSON);
 };
 
-var level1Music;
-
 preloadState.prototype.create = function() {
-	game.state.start("LevelThree");
+	game.state.start("LevelOne");
 	level1Music = game.add.audio('level1Music');
 	level1Music.play();
 };
