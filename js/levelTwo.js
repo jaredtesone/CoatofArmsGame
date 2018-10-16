@@ -6,7 +6,7 @@ var slashDamage = 10;
 var thrustDamage = 30;
 var strikeDamage = 20;
 var smashThreshold = 1;
-var damageReduc = 5;
+var damageReduc = 1;
 var shieldDamage = 50;
 var stageCounter = 0;
 var map;
@@ -19,10 +19,10 @@ let levelTwoState = function() {
 	this.score = 0;
 };
 
-levelOneState.prototype.create = function() {
+levelTwoState.prototype.create = function() {
 	game.physics.startSystem(Phaser.Physics.ARCADE);
-	/*
-	//this.map = this.game.add.tilemap("TileMap2", 125, 125, 125, 75);
+	
+	this.map = this.game.add.tilemap("TileMap2", 125, 125, 125, 75);
 	this.map.addTilesetImage("TileSheetv2", "TileSheetv2");
 	this.layerMain = this.map.createLayer("main");
 	this.layerBack = this.map.createLayer("back");
@@ -31,7 +31,7 @@ levelOneState.prototype.create = function() {
 	this.layerBack.wrap = true;
 	this.map.setCollision([7, 8, 9, 10, 12], true, this.layerMain);
 	game.physics.arcade.enable(this.layerMain);
-	//layerMain.wrap = true;*/
+	//layerMain.wrap = true;
 
 	this.enemies = game.add.group();
 	this.enemies.enableBody = true;
@@ -43,31 +43,39 @@ levelOneState.prototype.create = function() {
 	ground.body.immovable = true;
 	//game.physics.arcade.enable(this.ground);*/
 
-	this.player = new Player(5000, 4625, "player", true);
+	this.player = new Player(2000, 1500, "player", true, false);
 	game.physics.arcade.enable(this.player);
 	game.camera.follow(this.player, game.camera.FOLLOW_TOPDOWN);
 
-	//add peaceful NPCs	
-/*	this.peasant1 = game.add.sprite(4750, 4650, "peasant");
-	this.peasant2 = game.add.sprite(4750, 4600, "peasant");
-	this.knight = game.add.sprite(4625, 4675, "royalKnight");
-	this.blacksmith = game.add.sprite(2250, 2375, "blacksmith");
+	this.darkKnight = new Enemy(2000, 1125, "darkKnight", "dark knight", true);
+	this.enemies.add(this.darkKnight);
 
-	this.sign = game.add.sprite(4625, 4625, "sign");
+	//add peaceful NPCs	
+/*	this.peasant1 = game.add.sprite(4750, 4650, "character");
+	this.peasant2 = game.add.sprite(4750, 4600, "character");
+	this.knight = game.add.sprite(4625, 4675, "player");
+	this.blacksmith = game.add.sprite(2250, 2375, "character");
+
+	this.sign = game.add.sprite(4625, 4625, "player");*/
 
 	//add five bandits that are initially peaceful but will turn hostile
-	this.bandit1 = new Enemy(1625, 1250, "bandit", "bandit", false);
+/*	this.bandit1 = new Enemy(1625, 1250, "character", "bandit", false);
 	this.enemies.add(this.bandit1);
-	this.bandit2 = new Enemy(2125, 1250, "bandit", "bandit", false);
+	this.bandit2 = new Enemy(2125, 1250, "character", "bandit", false);
 	this.enemies.add(this.bandit2);
-	this.bandit3 = new Enemy(2125, 1625, "bandit", "bandit", false);
+	this.bandit3 = new Enemy(2125, 1625, "character", "bandit", false);
 	this.enemies.add(this.bandit3);
-	this.bandit4 = new Enemy(1625, 1625, "bandit", "bandit", false);
+	this.bandit4 = new Enemy(1625, 1625, "character", "bandit", false);
 	this.enemies.add(this.bandit4);*/
 /*	this.bandit5 = new Enemy(1875, 1500, "bandit", "bandit", false);
 	this.enemies.add(this.bandit5);*/
 
 	this.button = game.add.button(0, 875, "buttonBackground", this.loadText, this);
+	this.button.fixedToCamera = true;
+
+	text = game.add.text(0, 875, "Intro text", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+	text.setTextBounds(0, 0, 2436, 250);
+	text.fixedToCamera = true;
 
 	//this.player.body.bounce.y = 0.2;
 	//this.player.body.gravity.y = 300;
@@ -85,16 +93,21 @@ levelTwoState.prototype.update = function() {
 	game.physics.arcade.collide(this.enemies, this.layerMain);
 	game.physics.arcade.collide(this.player, this.layerMain);
 
+	if (this.button.alive)
+		this.player.buttonPressed = true;
+	else
+		this.player.buttonPressed = false;
+
 	//if clicked through beginning text and within 200px of blacksmith, display blacksmith text
-	if (stageCounter === 7 && getDist(this.player.position, new Phaser.Point(2250, 2375)) <= 200) {
+	/*if (stageCounter === 7 && getDist(this.player.position, new Phaser.Point(2250, 2375)) <= 200) {
 		this.loadText();
-	}
+	}*/
 
-	if (stageCounter === 11 && getDist(this.player.position, new Phaser.Point(1950, 2000)) <= 200) {
+	/*if (stageCounter === 11 && getDist(this.player.position, new Phaser.Point(1950, 2000)) <= 200) {
 		this.loadText();
-	}
+	}*/
 
-	if (stageCounter === 15 && this.enemies.countLiving() === 0) {
+	if (stageCounter === 6 && this.enemies.countLiving() === 0) {
 		this.loadText();
 	}
 	//enemies will chase down player within certain detection radius
@@ -236,81 +249,67 @@ function followPlayer(enemy, player){
 		enemy.attacking = false;
 };
 
-levelOneState.prototype.loadText = function() {
-	this.player.stationary = true;
+levelTwoState.prototype.loadText = function() {
+	//this.player.stationary = true;
+	//this.player.buttonPressed = true;
 	stageCounter++;
+	//text.kill();
+	text.fixedToCamera = true;
+	text.setTextBounds(0, 875, 2436, 250);
 	if (stageCounter === 1) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 2) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 3) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		this.bandit1 = new Enemy(1250, 1500, "character", "bandit", false);
+		this.enemies.add(this.bandit1);
+		this.bandit2 = new Enemy(2375, 1500, "character", "bandit", false);
+		this.enemies.add(this.bandit2);
+		this.bandit3 = new Enemy(2125, 875, "character", "bandit", false);
+		this.enemies.add(this.bandit3);
+		this.bandit4 = new Enemy(1375, 1125, "character", "bandit", false);
+		this.enemies.add(this.bandit4);
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 4) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		text = game.add.text(0, 875, "kill him bois", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 5) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		text = game.add.text(0, 875, "don quiz poop", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 	} else if (stageCounter === 6) {
-		text = game.add.text(0, 875, "asdfghjkl;", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-	} else if (stageCounter === 7) {
-		text = game.add.text(0, 875, "", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		this.button.kill();
-		return;
-	} else if (stageCounter === 8) {
-		text = game.add.text(0, 875, "blacksmith stuff", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		this.button.revive();
-	} else if (stageCounter === 9) {
-		text = game.add.text(0, 875, "player response", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-	} else if (stageCounter === 10) {
-		text = game.add.text(0, 875, "blacksmith gives sword", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		damageReduc = 1;
-	} else if (stageCounter === 11) {
-		text = game.add.text(0, 875, "", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		this.button.kill();
-		return;
-	} else if (stageCounter === 12) {
-		text = game.add.text(0, 875, "bandit text", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		this.button.revive();
-	} else if (stageCounter === 13) {
-		text = game.add.text(0, 875, "player response", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-	} else if (stageCounter === 14) {
-		text = game.add.text(0, 875, "bandit laughter", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-	} else if (stageCounter === 15) {
+		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.button.kill();
 		this.bandit1.evil = true;
 		this.bandit2.evil = true;
 		this.bandit3.evil = true;
 		this.bandit4.evil = true;
-		this.bandit5.evil = true;
-		return;
-	} else if (stageCounter === 16) {
-		text = game.add.text(0, 875, "player victory", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		//this.bandit5.evil = true;
+	}/* else if (stageCounter === 7) {
+		text = game.add.text(0, 875, "", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
 		this.button.revive();
-	} else if (stageCounter === 17) {
-		text = game.add.text(0, 875, "blacksmith crying", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-	} else if (stageCounter == 18) {
-		text = game.add.text(0, 875, "get shield", {fill: "white"});
-		this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
-		this.player.hasShield = true;
-	} else if (stageCounter === 19) {
-		game.state.start("LevelTwo");
+		//return;
+	}*/ else if (stageCounter === 7) {
+		text = game.add.text(0, 875, "victory!", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		this.button.revive();
+	} else if (stageCounter === 8) {
+		text = game.add.text(0, 875, "hero's armor", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+	} else if (stageCounter === 9) {
+		text = game.add.text(0, 875, "good sign boi", {fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+		//this.player.tap = this.player.doubleTap = this.player.swipe = this.player.hold = this.player.drag = false;
+		this.player.armor = true;
+	} else if (stageCounter === 10) {
+		//next level
 	}
-
+	text.setTextBounds(0, 0, 2436, 250);
+	text.fixedToCamera = true;
+	//this.player.buttonPressed = false;
 
 
 };

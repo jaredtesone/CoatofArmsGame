@@ -43,7 +43,7 @@ levelOneState.prototype.create = function() {
 	ground.body.immovable = true;
 	//game.physics.arcade.enable(this.ground);*/
 
-	this.player = new Player(5000, 4625, "player", false);
+	this.player = new Player(5000, 4625, "player", false, false);
 	game.physics.arcade.enable(this.player);
 	game.camera.follow(this.player, game.camera.FOLLOW_TOPDOWN);
 

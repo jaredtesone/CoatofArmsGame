@@ -20,7 +20,7 @@ var relCt = 0;
 var posUp;
 var posDown;
 
-let Player = function (x, y, skin, shield) {
+let Player = function (x, y, skin, shield, armor) {
 	Phaser.Sprite.call(this, game, x, y, skin);
 	game.add.existing(this);
 
@@ -39,12 +39,16 @@ let Player = function (x, y, skin, shield) {
 	this.swipeCt = 0;
 	this.dragCt = 0;
 	this.hp = 100;
+	this.armor = armor;
 	this.alive = true;
 	this.shieldCharge = 0;
 	this.hasShield = shield;
 	this.cameraPt = new Phaser.Point(-1, -1);
 	this.stationary = false;
 	this.buttonPressed = false;
+
+	if (this.armor)
+		this.hp = 200;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -52,6 +56,8 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player; 
 
 Player.prototype.update = function() {
+	if (this.armor)
+		this.hp = 200;
 	this.movement();
 };
 
@@ -94,7 +100,7 @@ Player.prototype.movement = function() {
 				this.pointerCross = false;
 				resetCt++;
 			}
-			console.log("start: (" + this.startPoint.x + ", " + this.startPoint.y + ")");
+			//console.log("start: (" + this.startPoint.x + ", " + this.startPoint.y + ")");
 			pressCt++;
 		} else
 			this.stationary = true;

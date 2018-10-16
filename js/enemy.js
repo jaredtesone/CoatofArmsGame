@@ -28,6 +28,15 @@ let Enemy = function (x, y, skin, kind, evil) {
 	this.alive = true; 
 	this.lungeCt = 0;
 	this.evil = evil;
+
+	if (this.kind === "dark knight") {
+		this.hp = 150;
+		this.damage = 25;
+	} else if (this.kind = "bandit") {
+		this.hp = 50;
+		this.damage = 25;
+	}
+
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
