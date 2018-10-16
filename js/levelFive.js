@@ -190,6 +190,7 @@ levelFiveState.prototype.damagePlayer = function(enemy) {
 	if (this.player.hp <= 0) {
 		this.player.alive = false;
 		this.player.kill();
+		this.defeat = game.sprite.add("defeat");
 		//game over?
 	}
 }
