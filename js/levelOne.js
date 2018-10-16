@@ -43,11 +43,13 @@ levelOneState.prototype.create = function() {
 
 	this.player = new Player(6437.5, 9312.5, "player", true);
 	game.physics.arcade.enable(this.player);
-	game.camera.follow(this.player);
+	game.camera.follow(this.player, game.camera.FOLLOW_TOPDOWN);
 	this.enemy1 = new Enemy(10, 10, "player", "generic");
 	this.enemies.add(this.enemy1);
 	this.enemy2 = new Enemy(300, 58, "player", "dragon");
 	this.enemies.add(this.enemy2);
+	this.enemy3 = new Enemy(6400, 9300, "player", "generic");
+	this.enemies.add(this.enemy3);
 
 
 	//this.player.body.bounce.y = 0.2;
@@ -82,18 +84,18 @@ levelOneState.prototype.update = function() {
 		let pi = game.math.PI2 / 2;
 		let angle = game.math.normalizeAngle(this.player.swipeAngle);
 		let damage = 0;
-		if (angle >= 7*pi/4 || angle < pi/4) {	//swipe left (angle rotated because y is down)
-			console.log("slash left");
-			damage = slashDamage;
-		} else if (angle >= pi/4 && angle < 3*pi/4) {	//swipe up
-			console.log("thrust");
-			damage = thrustDamage;
-		} else if (angle >= 3*pi/4 && angle < 5*pi/4) {	//swipe right (angle rotated because y is down)
+		if (angle >= 7*pi/4 || angle < pi/4) {	//swipe right
 			console.log("slash right");
 			damage = slashDamage;
-		} else {	//swipe down
+		} else if (angle >= pi/4 && angle < 3*pi/4) {	//swipe up (angle rotated because y is down)
 			console.log("strike");
 			damage = strikeDamage;
+		} else if (angle >= 3*pi/4 && angle < 5*pi/4) {	//swipe left
+			console.log("slash left");
+			damage = slashDamage;
+		} else {	//swipe down (angle rotated because y is down)
+			console.log("thrust");
+			damage = thrustDamage;
 		}
 		//attack all enemies targeted by swipe
 		if (this.player.pointerCross && this.player.swipeCt === 0) {
@@ -166,7 +168,7 @@ levelOneState.prototype.target = function(enemy, attacking) {
 	if (!this.player.alive)
 		return;	
 	//must be swiping within 5 pixels of enemy, and player can be no farther than 5 pixels away from enemy in order to target enemy
-	if (samePoint(enemy.body.position, this.player.pointer.position, weaponRadius) && samePoint(enemy.body.position, this.player.body.position, attackRadius)) {
+	if (samePoint(enemy.body.position, screenToWorld(this.player.pointer.position), weaponRadius) && samePoint(enemy.body.position, this.player.body.position, attackRadius)) {
 		this.player.pointerCross = attacking;
 		enemy.targeted = attacking;
 		//console.log(enemy.targeted);
@@ -226,4 +228,15 @@ function getDist(point1, point2) {
 //determine if two points are within epsilon pixels of each other
 function samePoint(point1, point2, epsilon) {
 	return (game.math.fuzzyEqual(point1.x, point2.x, epsilon) && game.math.fuzzyEqual(point1.y, point2.y, epsilon));
+};
+
+function worldToScreen(point) {
+	let newPt = new Phaser.Point(point.x - game.camera.x, point.y - game.camera.y);
+  	return newPt;
+};
+
+
+function screenToWorld(point) {
+	let newPt = new Phaser.Point(point.x + game.camera.x, point.y + game.camera.y);
+  	return newPt;
 };
