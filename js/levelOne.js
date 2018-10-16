@@ -1,6 +1,6 @@
-var detectRadius = 300;
+var detectRadius = 500;
 var weaponRadius = 100;
-var attackRadius = 100;
+var attackRadius = 200;
 var damageRadius = 5;
 var slashDamage = 10;
 var thrustDamage = 30;
@@ -61,13 +61,13 @@ levelOneState.prototype.create = function() {
 	this.sign = game.add.sprite(4625, 4625, "player");
 
 	//add five bandits that are initially peaceful but will turn hostile
-	this.bandit1 = new Enemy(1625, 1250, "character", "bandit", false);
+	this.bandit1 = new Enemy(1625, 1250, "bandit", "bandit", false);
 	this.enemies.add(this.bandit1);
-	this.bandit2 = new Enemy(2125, 1250, "character", "bandit", false);
+	this.bandit2 = new Enemy(2125, 1250, "bandit", "bandit", false);
 	this.enemies.add(this.bandit2);
-	this.bandit3 = new Enemy(2125, 1625, "character", "bandit", false);
+	this.bandit3 = new Enemy(2125, 1625, "bandit", "bandit", false);
 	this.enemies.add(this.bandit3);
-	this.bandit4 = new Enemy(1625, 1625, "character", "bandit", false);
+	this.bandit4 = new Enemy(1625, 1625, "bandit", "bandit", false);
 	this.enemies.add(this.bandit4);
 /*	this.bandit5 = new Enemy(1875, 1500, "bandit", "bandit", false);
 	this.enemies.add(this.bandit5);*/

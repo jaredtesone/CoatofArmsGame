@@ -7,6 +7,7 @@ let preloadState = function() {
 preloadState.prototype.preload = function() {
 	game.load.spritesheet("player", "assets/character.png", 32, 48);
 	game.load.spritesheet("character", "assets/CHaracters.png", 125, 125);
+	game.load.spritesheet("bandit", "assets/banditFinal.png", 70, 125);
 	game.load.tilemap('TileMap1', 'assets/start.json', null, Phaser.Tilemap.TILED_JSON);
 	game.load.image('TileSheetv2', 'assets/TileSheetv2.png');
 	game.load.audio('level1Music', 'assets/audio/music/Level 1 (Village).mp3');
@@ -23,7 +24,7 @@ preloadState.prototype.preload = function() {
 };
 
 preloadState.prototype.create = function() {
-	game.state.start("LevelTwo");
+	game.state.start("LevelOne");
 };
 
 preloadState.prototype.update = function() {

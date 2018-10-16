@@ -33,6 +33,14 @@ let Enemy = function (x, y, skin, kind, evil) {
 		this.hp = 1000;
 		this.damage = 25;
 	} else if (this.kind = "bandit") {
+		this.animations.add("idleDown", [0], 1, false);
+		this.animations.add("idleUp", [12], 1, false);
+		this.animations.add("idleRight", [22], 1, false);
+		this.animations.add("idleLeft", [45], 1, false);
+		this.animations.add("down", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 15, true);
+		this.animations.add("up", [13, 14, 15, 16, 17, 18, 19, 20, 21], 15, true);
+		this.animations.add("right", [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33], 15, true);
+		this.animations.add("left", [44, 43, 42, 41, 40, 39, 38, 37, 36, 35], 15, true);
 		this.hp = 50;
 		this.damage = 10;
 	}
@@ -74,6 +82,26 @@ Enemy.prototype.update = function() {
 				if (lungeWait <= 0) {
 					this.retreat();
 				}
+			}
+		}
+	}
+	if (this.body.velocity.x === 0 && this.body.velocity.y ===0) {
+		if (this.kind === "bandit") {
+			this.animations.play("idleDown");
+		}
+	} else {
+		//x dominant
+		if (game.math.distance(this.body.velocity.x, 0, 0, 0) >= game.math.distance(0, this.body.velocity.y, 0, 0)) {
+			if (this.body.velocity.x > 0) {
+				this.animations.play("right");
+			} else {
+				this.animations.play("left");
+			}
+		} else {
+			if (this.body.velocity.y > 0) {
+				this.animations.play("down");
+			} else {
+				this.animations.play("up");
 			}
 		}
 	}
