@@ -18,12 +18,8 @@ preloadState.prototype.preload = function() {
 	game.load.tilemap("TileMap2", "assets/woods.json", null, Phaser.Tilemap.TILED_JSON);
 };
 
-var level1Music;
-
 preloadState.prototype.create = function() {
 	game.state.start("LevelOne");
-	level1Music = game.add.audio('level1Music');
-	level1Music.play();
 };
 
 preloadState.prototype.update = function() {
