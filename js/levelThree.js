@@ -16,6 +16,7 @@ var text;
 var textA;
 var textB;
 var scepter;
+var level3Music;
 
 // gameState constructor
 let levelThreeState = function() {
@@ -23,6 +24,10 @@ let levelThreeState = function() {
 };
 
 levelThreeState.prototype.create = function() {
+	
+	level3Music = game.add.audio('level3Music');
+	level3Music.play();
+	
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
 	this.map = this.game.add.tilemap("TileMap3", 125, 125, 125, 75);
